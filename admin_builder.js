@@ -125,13 +125,33 @@ function renderBuilderUI() {
         </div>
       `;
     } else if (section.type === 'circle_categories' || section.type === 'brands_marquee' || section.type === 'square_categories') {
+      const isBrands = section.type === 'brands_marquee';
+      let itemsHtml = (section.items || []).map((item, itemIdx) => `
+        <div style="border: 1px solid var(--adm-border); border-radius: 6px; padding: 10px; margin-bottom: 8px; background: #fff; position: relative;">
+          <button onclick="removeSectionItem(${index}, ${itemIdx})" style="position: absolute; right: 8px; top: 8px; background: none; border: none; color: #ef4444; cursor: pointer;"><i class="ri-close-circle-fill"></i></button>
+          
+          <div style="display: grid; grid-template-columns: 60px 1fr; gap: 12px; align-items: center;">
+            <div style="width: 60px; height: 60px; border-radius: ${isBrands ? '4px' : '50%'}; overflow: hidden; background: #f1f5f9; border: 1px solid var(--adm-border);">
+              <img src="${item.image || ''}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              ${!isBrands ? `<input type="text" class="adm-form-input" style="padding: 4px 8px; font-size: 0.8rem;" placeholder="Title (e.g. Kurtis)" value="${item.label || ''}" onchange="updateSectionItem(${index}, ${itemIdx}, 'label', this.value)">` : ''}
+              <input type="text" class="adm-form-input" style="padding: 4px 8px; font-size: 0.8rem;" placeholder="Image URL" value="${item.image || ''}" onchange="updateSectionItem(${index}, ${itemIdx}, 'image', this.value)">
+              <input type="text" class="adm-form-input" style="padding: 4px 8px; font-size: 0.8rem;" placeholder="Link (Optional)" value="${item.link || '#'}" onchange="updateSectionItem(${index}, ${itemIdx}, 'link', this.value)">
+            </div>
+          </div>
+        </div>
+      `).join('');
+
       body.innerHTML = `
         <div class="adm-form-group">
-          <label class="adm-form-label">${formatType(section.type)} Items (JSON Array):</label>
-          <div style="font-size: 0.75rem; color: #64748b; margin-bottom: 8px;">
-            ${section.type === 'brands_marquee' ? 'Example: [{"image":"logo.png","link":"#"}]' : 'Example: [{"image":"cat.jpg","label":"Category Name","link":"#", "bgColor": "#6366f1"}]'}
+          <label class="adm-form-label">${formatType(section.type)} Items:</label>
+          <div id="section-items-${index}">
+            ${itemsHtml}
           </div>
-          <textarea class="adm-form-input" rows="4" placeholder="Enter JSON array..." onchange="try{ updateSectionField(${index}, 'items', JSON.parse(this.value)) }catch(e){ alert('Invalid JSON format!') }">${JSON.stringify(section.items || [])}</textarea>
+          <button class="adm-btn-secondary" onclick="addSectionItem(${index})" style="width: 100%; justify-content: center; border-style: dashed; margin-top: 8px;">
+            <i class="ri-add-line"></i> Add Item
+          </button>
         </div>
       `;
     }
@@ -139,6 +159,34 @@ function renderBuilderUI() {
     el.appendChild(body);
     container.appendChild(el);
   });
+
+  // Sync Live Preview
+  const previewFrame = document.getElementById('builderPreviewFrame');
+  if (previewFrame && previewFrame.contentWindow) {
+    previewFrame.contentWindow.postMessage({ type: 'LIVE_PREVIEW_UPDATE', layout: homepageLayout }, '*');
+  }
+}
+
+window.addSectionItem = function(index) {
+  if (homepageLayout[index]) {
+    if (!homepageLayout[index].items) homepageLayout[index].items = [];
+    homepageLayout[index].items.push({ image: '', label: '', link: '#' });
+    renderBuilderUI();
+  }
+}
+
+window.removeSectionItem = function(index, itemIdx) {
+  if (homepageLayout[index] && homepageLayout[index].items) {
+    homepageLayout[index].items.splice(itemIdx, 1);
+    renderBuilderUI();
+  }
+}
+
+window.updateSectionItem = function(index, itemIdx, field, value) {
+  if (homepageLayout[index] && homepageLayout[index].items && homepageLayout[index].items[itemIdx]) {
+    homepageLayout[index].items[itemIdx][field] = value;
+    renderBuilderUI(); // Re-render to update preview
+  }
 }
 
 function getIconForType(type) {

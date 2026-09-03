@@ -451,27 +451,39 @@
       <!-- ====================================================
            7. HOMEPAGE BUILDER
            ==================================================== -->
-      <section id="builder" class="adm-view-section">
-        <div class="adm-card-container">
-          <div class="adm-card-header">
-            <div class="adm-card-header-left">
-              <h3 class="adm-card-title">Dynamic Homepage Builder</h3>
-              <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Drag, drop, and configure sections for your live storefront.</p>
-            </div>
-            <div class="adm-card-header-actions">
-              <button class="adm-btn-primary" onclick="addNewBuilderSection()">
-                <i class="ri-add-circle-line"></i> Add New Section
-              </button>
-              <button class="adm-btn-secondary" onclick="saveHomepageLayout()" style="background: var(--adm-primary); color: white; border: none;">
-                <i class="ri-save-line"></i> Save Layout
-              </button>
-            </div>
+      <section id="builder" class="adm-view-section" style="padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div>
+            <h2 class="adm-hero-title" style="font-size: 1.5rem;">Dynamic Homepage Builder</h2>
+            <p class="adm-hero-subtitle">WYSIWYG Editor: Build your layout on the left, see the live preview on the right.</p>
           </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="adm-btn-primary" onclick="openSectionModal()">
+              <i class="ri-add-circle-line"></i> Add New Section
+            </button>
+            <button class="adm-btn-secondary" onclick="saveHomepageLayout()" style="background: var(--adm-primary); color: white; border: none;">
+              <i class="ri-save-line"></i> Save Layout
+            </button>
+          </div>
+        </div>
 
-          <div style="padding: 20px;">
+        <div style="display: grid; grid-template-columns: 450px 1fr; gap: 24px; align-items: start;" id="builderTwoColumn">
+          <!-- Left: Builder Controls -->
+          <div class="adm-card-container" style="max-height: 800px; overflow-y: auto; padding: 20px; background: #fff; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.05);">
             <div id="homepageBuilderList" style="display: flex; flex-direction: column; gap: 15px;">
               <!-- Dynamic sections will be injected here by JS -->
             </div>
+          </div>
+
+          <!-- Right: Live Preview Iframe -->
+          <div class="adm-preview-pane" style="position: sticky; top: 90px;">
+            <div style="background: #e2e8f0; padding: 10px; border-radius: 12px 12px 0 0; display: flex; gap: 8px;">
+              <div style="width: 12px; height: 12px; border-radius: 50%; background: #fca5a5;"></div>
+              <div style="width: 12px; height: 12px; border-radius: 50%; background: #fde047;"></div>
+              <div style="width: 12px; height: 12px; border-radius: 50%; background: #86efac;"></div>
+              <span style="margin-left: auto; font-size: 0.75rem; color: #64748b; font-weight: 700;"><i class="ri-live-fill" style="color: #ef4444;"></i> LIVE PREVIEW</span>
+            </div>
+            <iframe id="builderPreviewFrame" src="index.html?preview=true" style="width: 100%; height: 750px; border: none; border-radius: 0 0 12px 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); background: #fff;"></iframe>
           </div>
         </div>
       </section>

@@ -91,72 +91,10 @@
     </div>
   </section>
 
-  <!-- HERO PROMOTIONAL BANNER CAROUSEL -->
-  <section class="sk-hero-section">
-    <div class="sk-carousel-container" id="heroCarousel">
-      <div class="sk-carousel-track" id="heroTrack">
-        <!-- Slide 1 -->
-        <div class="sk-hero-slide">
-          <div class="sk-hero-card">
-            <img src="assets/hero_fashion.jpg" alt="Festive Sale Banner" class="sk-hero-bg">
-            <div class="sk-hero-content">
-              <span class="sk-hero-tag"><i class="ri-fire-fill"></i> GRAND SHOPPING FESTIVAL</span>
-              <h1 class="sk-hero-title">Exclusive Ethnic Wear & Tech Offers</h1>
-              <p class="sk-hero-subtitle">Up to 80% OFF on Jacquard Silk Sarees, Designer Kurtis, Wireless Headphones & Smart Watches. Guaranteed Quality • Cash on Delivery.</p>
-              <button class="sk-btn-primary" onclick="scrollToSection('dealsSection')">Shop Now <i class="ri-arrow-right-line"></i></button>
-            </div>
-          </div>
-        </div>
-        <!-- Slide 2 -->
-        <div class="sk-hero-slide">
-          <div class="sk-hero-card">
-            <img src="assets/hero_tech.jpg" onerror="this.src='assets/hero_fashion.jpg'" alt="Tech Sale Banner" class="sk-hero-bg" style="filter: brightness(0.6) contrast(1.1);">
-            <div class="sk-hero-content">
-              <span class="sk-hero-tag" style="background: linear-gradient(135deg, #3b82f6, #2563eb);"><i class="ri-smartphone-line"></i> GADGET MANIA</span>
-              <h1 class="sk-hero-title">Premium Electronics at Wholesale Prices</h1>
-              <p class="sk-hero-subtitle">Discover the latest earbuds, smartwatches, and accessories. Top rated by thousands of dropshippers.</p>
-              <button class="sk-btn-primary" style="background: #2563eb;" onclick="scrollToSection('dealsSection')">Explore Tech <i class="ri-arrow-right-line"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Controls -->
-      <button class="sk-carousel-btn prev" onclick="moveCarousel(-1)"><i class="ri-arrow-left-s-line"></i></button>
-      <button class="sk-carousel-btn next" onclick="moveCarousel(1)"><i class="ri-arrow-right-s-line"></i></button>
-      
-      <!-- Dots -->
-      <div class="sk-carousel-dots" id="heroDots">
-        <span class="dot active" onclick="jumpCarousel(0)"></span>
-        <span class="dot" onclick="jumpCarousel(1)"></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEALS OF THE DAY SECTION WITH COUNTDOWN TIMER -->
-  <section class="sk-section" id="dealsSection">
-    <div class="sk-section-header">
-      <div class="sk-section-title">
-        <span>Deals of the Day</span>
-        <div class="sk-timer-chip">
-          <i class="ri-timer-flash-fill"></i> Ends in 02h 45m 12s
-        </div>
-      </div>
-      <div style="display: flex; gap: 10px; align-items: center;">
-        <select id="skSortSelect" onchange="handleSkSortChange()" style="background: #fff; border: 1px solid var(--sk-border); padding: 6px 12px; border-radius: var(--sk-radius-full); font-size: 0.8rem; font-weight: 700;">
-          <option value="relevance">Sort by: Relevance</option>
-          <option value="low-high">Price: Low to High</option>
-          <option value="high-low">Price: High to Low</option>
-          <option value="rating">Customer Rating</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- MAIN PRODUCT CATALOG GRID -->
-    <div class="sk-products-grid" id="skProductsGrid">
-      <!-- Dynamically Injected by app.js -->
-    </div>
-  </section>
+  <!-- DYNAMIC STOREFRONT CONTAINER -->
+  <div id="dynamicStorefrontContainer">
+    <!-- Sections injected by app.js based on Supabase Layout -->
+  </div>
 
   <!-- ============================================
        PREMIUM E-COMMERCE STORE FOOTER (FLIPKART STYLE)

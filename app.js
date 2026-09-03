@@ -644,6 +644,14 @@ async function applyDynamicSettings() {
       return;
     }
     if (data) {
+      if (data.homepage_layout) {
+        try {
+          const layoutArray = JSON.parse(data.homepage_layout);
+          renderDynamicHomepage(layoutArray);
+        } catch (e) {
+          console.error("Error parsing homepage_layout", e);
+        }
+      }
       if (data.primary_color) {
         document.documentElement.style.setProperty('--sk-primary', data.primary_color);
       }
@@ -748,7 +756,134 @@ function resetCarouselTimer() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('heroCarousel')) {
-    startCarouselTimer();
+  startCarouselTimer();
+});
+
+/* =================================================================
+   DYNAMIC HOMEPAGE RENDERER (WYSIWYG)
+   ================================================================= */
+function renderDynamicHomepage(layoutArray) {
+  const container = document.getElementById('dynamicStorefrontContainer');
+  if (!container) return;
+
+  container.innerHTML = '';
+  if (!Array.isArray(layoutArray) || layoutArray.length === 0) {
+    return;
+  }
+
+  layoutArray.forEach((section, index) => {
+    const secDiv = document.createElement('div');
+    
+    if (section.type === 'hero') {
+      secDiv.innerHTML = `
+        <section class="sk-hero-section">
+          <div class="sk-carousel-container">
+            <div class="sk-carousel-track" style="transform: translateX(0%);">
+              <div class="sk-hero-slide">
+                <div class="sk-hero-card">
+                  <img src="assets/hero_fashion.jpg" class="sk-hero-bg">
+                  <div class="sk-hero-content">
+                    <span class="sk-hero-tag"><i class="ri-fire-fill"></i> EXCLUSIVE</span>
+                    <h1 class="sk-hero-title">${section.title || 'Grand Shopping Festival'}</h1>
+                    <button class="sk-btn-primary">Shop Now <i class="ri-arrow-right-line"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+    } else if (section.type === 'circle_categories' || section.type === 'square_categories') {
+      const isCircle = section.type === 'circle_categories';
+      const itemsHtml = (section.items || []).map(item => `
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; min-width: 80px;" onclick="filterSkCategory('${item.label}')">
+          <div style="width: 80px; height: 80px; border-radius: ${isCircle ? '50%' : '12px'}; overflow: hidden; border: 2px solid var(--sk-border); background: #f8fafc;">
+            <img src="${item.image}" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--sk-text-dark); text-align: center;">${item.label}</span>
+        </div>
+      `).join('');
+      
+      secDiv.innerHTML = `
+        <section style="padding: 20px;">
+          <div style="display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px;" class="hide-scrollbar">
+            ${itemsHtml}
+          </div>
+        </section>
+      `;
+    } else if (section.type === 'deals') {
+      secDiv.innerHTML = `
+        <section class="sk-section">
+          <div class="sk-section-header">
+            <div class="sk-section-title">
+              <span>${section.title || 'Deals of the Day'}</span>
+              <div class="sk-timer-chip"><i class="ri-timer-flash-fill"></i> Ends soon</div>
+            </div>
+          </div>
+          <div class="sk-products-grid" id="dynamicDealsGrid-${index}">
+            <!-- Will be populated by renderSkProducts dynamically if needed, or we just render all products here for now -->
+          </div>
+        </section>
+      `;
+      // Render some products into this specific grid
+      setTimeout(() => {
+        const grid = document.getElementById(`dynamicDealsGrid-${index}`);
+        if(grid) {
+          const originalGrid = document.getElementById('skProductsGrid');
+          if(originalGrid && originalGrid !== grid) {
+             grid.innerHTML = originalGrid.innerHTML;
+          } else {
+             // temporarily render all if skProductsGrid doesn't exist
+             const oldId = document.getElementById('skProductsGrid');
+             grid.id = 'skProductsGrid'; 
+             renderSkProducts();
+             grid.id = `dynamicDealsGrid-${index}`;
+          }
+        }
+      }, 500);
+    } else if (section.type === 'grid') {
+      secDiv.innerHTML = `
+        <section class="sk-section">
+          <div class="sk-section-header">
+            <div class="sk-section-title">
+              <span>${section.title || 'Trending Products'}</span>
+            </div>
+          </div>
+          <div class="sk-products-grid" id="dynamicGrid-${index}"></div>
+        </section>
+      `;
+      setTimeout(() => {
+        const grid = document.getElementById(`dynamicGrid-${index}`);
+        if(grid) {
+          const oldId = document.getElementById('skProductsGrid');
+          if(oldId) oldId.id = 'skProductsGrid_disabled';
+          grid.id = 'skProductsGrid';
+          renderSkProducts();
+        }
+      }, 500);
+    } else if (section.type === 'brands_marquee') {
+      const itemsHtml = (section.items || []).map(item => `
+        <div style="padding: 10px 30px;">
+          <img src="${item.image}" style="height: 40px; object-fit: contain;">
+        </div>
+      `).join('');
+      
+      secDiv.innerHTML = `
+        <section style="padding: 20px 0; background: #fff; border-top: 1px solid var(--sk-border); border-bottom: 1px solid var(--sk-border); overflow: hidden;">
+          <div style="display: flex; width: max-content; animation: marquee 20s linear infinite;">
+            ${itemsHtml}${itemsHtml}${itemsHtml}
+          </div>
+        </section>
+      `;
+    }
+
+    container.appendChild(secDiv);
+  });
+}
+
+// Live Preview Listener
+window.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'LIVE_PREVIEW_UPDATE') {
+    renderDynamicHomepage(event.data.layout);
   }
 });
