@@ -42,8 +42,22 @@ window.getSupabase = function() {
 
 // Auth State Observer
 if (window.auth) {
-  window.auth.onAuthStateChanged((user) => {
+  window.auth.onAuthStateChanged(async (user) => {
     if (user) {
+      // Sync user to Supabase profiles table
+      const sb = window.getSupabase();
+      if (sb) {
+        try {
+          const role = (user.email || '').toLowerCase() === 'biswajitsingh7899@gmail.com' ? 'admin' : 'user';
+          await sb.from('profiles').upsert({
+            firebase_uid: user.uid,
+            email: user.email || 'No Email',
+            role: role
+          }, { onConflict: 'firebase_uid' });
+        } catch (e) {
+          console.error("Error syncing profile:", e);
+        }
+      }
       document.dispatchEvent(new CustomEvent('authStateChanged', { detail: { user } }));
     } else {
       document.dispatchEvent(new CustomEvent('authStateChanged', { detail: { user: null } }));
