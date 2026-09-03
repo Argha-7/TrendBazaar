@@ -282,3 +282,25 @@ if (document.readyState === 'loading') {
 } else {
   loadHomepageBuilder();
 }
+
+window.loadDefaultBuilderTemplate = function() {
+  if(confirm("Are you sure? This will replace your current unsaved layout with the default template.")) {
+    homepageLayout = [
+      { type: 'hero', title: 'Grand Shopping Festival' },
+      { type: 'circle_categories', items: [
+          { image: 'https://images.meesho.com/images/products/919864713/ysbzv_512.jpg', label: 'Ethnic', link: '#' },
+          { image: 'https://images.meesho.com/images/products/919864713/ysbzv_512.jpg', label: 'Western', link: '#' },
+          { image: 'https://images.meesho.com/images/products/919864713/ysbzv_512.jpg', label: 'Tech', link: '#' },
+          { image: 'https://images.meesho.com/images/products/919864713/ysbzv_512.jpg', label: 'Home', link: '#' }
+      ]},
+      { type: 'deals', title: 'Deals of the Day', timer: '2026-12-31T00:00:00Z' },
+      { type: 'grid', title: 'Trending Now', limit: 8 }
+    ];
+    renderBuilderUI();
+    if(typeof showAdminToast === 'function') {
+      showAdminToast("Default template loaded! Don't forget to click Save.", "success");
+    } else {
+      alert("Default template loaded! Don't forget to click Save.");
+    }
+  }
+}
