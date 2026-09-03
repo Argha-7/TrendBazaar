@@ -68,6 +68,11 @@
         <span>Site Customizer</span>
       </a>
 
+      <a href="#builder" class="adm-nav-item" data-view="builder">
+        <i class="ri-layout-masonry-line"></i>
+        <span>Homepage Builder</span>
+      </a>
+
       <div class="adm-nav-heading" style="margin-top: 14px;">Finance</div>
 
       <a href="admin_wallet.html" class="adm-nav-item">
@@ -328,6 +333,37 @@
             <!-- Left Column: Controls Form -->
             <form id="siteSettingsForm">
               <div class="adm-form-group">
+                <label class="adm-form-label">Store Brand Name:</label>
+                <input type="text" id="ssStoreName" class="adm-form-input" placeholder="TrendBazaar" oninput="updateLivePreview()">
+              </div>
+
+              <div class="adm-form-group">
+                <label class="adm-form-label">Store Logo URL (Optional):</label>
+                <input type="url" id="ssStoreLogo" class="adm-form-input" placeholder="https://..." oninput="updateLivePreview()">
+              </div>
+
+              <div class="adm-form-group">
+                <label class="adm-form-label">Top Announcement Bar Text:</label>
+                <input type="text" id="ssAnnouncement" class="adm-form-input" placeholder="🎉 Free Shipping on All Orders!" oninput="updateLivePreview()">
+              </div>
+
+              <div class="adm-form-group">
+                <label class="adm-form-label">Support WhatsApp/Phone:</label>
+                <input type="text" id="ssSupportPhone" class="adm-form-input" placeholder="+91 9876543210" oninput="updateLivePreview()">
+              </div>
+
+              <div class="adm-form-group" style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                  <label class="adm-form-label">Instagram URL:</label>
+                  <input type="url" id="ssInstagram" class="adm-form-input" placeholder="https://instagram.com/..." oninput="updateLivePreview()">
+                </div>
+                <div style="flex: 1;">
+                  <label class="adm-form-label">Facebook URL:</label>
+                  <input type="url" id="ssFacebook" class="adm-form-input" placeholder="https://facebook.com/..." oninput="updateLivePreview()">
+                </div>
+              </div>
+
+              <div class="adm-form-group">
                 <label class="adm-form-label">Primary Brand Theme Color:</label>
                 <div class="adm-color-picker-row">
                   <input type="color" id="ssPrimaryColor" class="adm-color-input" value="#2874f0" oninput="updateLivePreview()">
@@ -473,6 +509,36 @@
         </form>
       </div>
     </div>
+    </main>
+
+    <!-- ====================================================
+         7. HOMEPAGE BUILDER
+         ==================================================== -->
+    <section id="builder" class="adm-view-section">
+      <div class="adm-card-container">
+        <div class="adm-card-header">
+          <div class="adm-card-header-left">
+            <h3 class="adm-card-title">Dynamic Homepage Builder</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Drag, drop, and configure sections for your live storefront.</p>
+          </div>
+          <div class="adm-card-header-actions">
+            <button class="adm-btn-primary" onclick="addNewBuilderSection()">
+              <i class="ri-add-circle-line"></i> Add New Section
+            </button>
+            <button class="adm-btn-secondary" onclick="saveHomepageLayout()" style="background: var(--adm-primary); color: white; border: none;">
+              <i class="ri-save-line"></i> Save Layout
+            </button>
+          </div>
+        </div>
+
+        <div style="padding: 20px;">
+          <div id="homepageBuilderList" style="display: flex; flex-direction: column; gap: 15px;">
+            <!-- Dynamic sections will be injected here by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 
   <!-- ========================================================
@@ -537,5 +603,6 @@
   
   <script src="auth.js"></script>
   <script src="admin_master.js"></script>
+  <script src="admin_builder.js"></script>
 </body>
 </html>

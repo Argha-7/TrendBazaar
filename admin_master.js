@@ -602,6 +602,12 @@ async function loadSiteSettings() {
       if (data.footer_text) {
         document.getElementById('ssFooterText').value = data.footer_text;
       }
+      if (data.store_name) document.getElementById('ssStoreName').value = data.store_name;
+      if (data.store_logo_url) document.getElementById('ssStoreLogo').value = data.store_logo_url;
+      if (data.announcement_text) document.getElementById('ssAnnouncement').value = data.announcement_text;
+      if (data.support_phone) document.getElementById('ssSupportPhone').value = data.support_phone;
+      if (data.social_instagram) document.getElementById('ssInstagram').value = data.social_instagram;
+      if (data.social_facebook) document.getElementById('ssFacebook').value = data.social_facebook;
       updateLivePreview();
     }
   } catch (e) {
@@ -647,12 +653,25 @@ document.getElementById('siteSettingsForm')?.addEventListener('submit', async (e
   const banner_image_url = document.getElementById('ssBannerImage').value;
   const footer_text = document.getElementById('ssFooterText').value;
 
+  const store_name = document.getElementById('ssStoreName')?.value || 'TrendBazaar';
+  const store_logo_url = document.getElementById('ssStoreLogo')?.value || '';
+  const announcement_text = document.getElementById('ssAnnouncement')?.value || '';
+  const support_phone = document.getElementById('ssSupportPhone')?.value || '';
+  const social_instagram = document.getElementById('ssInstagram')?.value || '';
+  const social_facebook = document.getElementById('ssFacebook')?.value || '';
+
   const { error } = await sb.from('site_settings').upsert({
     id: 1,
     primary_color,
     header_bg_color,
     banner_image_url,
-    footer_text
+    footer_text,
+    store_name,
+    store_logo_url,
+    announcement_text,
+    support_phone,
+    social_instagram,
+    social_facebook
   });
 
   if (error) {
