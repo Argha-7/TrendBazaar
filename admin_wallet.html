@@ -63,11 +63,26 @@
     .badge-credit { background: #d1fae5; color: #059669; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
     .badge-debit  { background: #fee2e2; color: #dc2626; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
     .badge-uid { background: #f1f5f9; color: #475569; padding: 3px 10px; border-radius: 6px; font-size: 0.72rem; font-family: monospace; }
-  </style>
+    
+    .adm-sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; display: none; opacity: 0; transition: opacity 0.3s; }
+    .adm-sidebar-overlay.active { display: block; opacity: 1; }
+    .adm-icon-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 5px; color: #1e293b; }
+
+    @media (max-width: 900px) {
+      .adm-sidebar { position: fixed; height: 100vh; transform: translateX(-100%); transition: transform 0.3s; z-index: 2000; }
+      .adm-sidebar.open { transform: translateX(0); }
+      .adm-wallet-main { padding: 16px; }
+      .adm-stats-row { grid-template-columns: 1fr; }
+      .adm-icon-btn { display: inline-block; }
+      .adm-wallet-header { display: flex; align-items: center; gap: 12px; }
+      .adm-wallet-header h1 { font-size: 1.4rem; }
+      .adm-table-wrap { overflow-x: auto; }
+    }
 </head>
 <body>
 
 <div class="adm-wallet-page">
+  <div class="adm-sidebar-overlay" id="admSidebarOverlay"></div>
   <!-- Sidebar -->
   <aside class="adm-sidebar">
     <div class="adm-sidebar-logo"><i class="ri-shopping-cart-fill"></i> TrendBazaar</div>
@@ -87,8 +102,11 @@
 
     <div id="adminWalletContent">
       <div class="adm-wallet-header">
-        <h1>💳 Wallet Manager</h1>
-        <p>View all user wallets, credit/debit balances, and track transaction history.</p>
+        <button class="adm-icon-btn" id="admSidebarToggle"><i class="ri-menu-line"></i></button>
+        <div>
+          <h1>💳 Wallet Manager</h1>
+          <p>View all user wallets, credit/debit balances, and track transaction history.</p>
+        </div>
       </div>
 
       <!-- Stats -->
@@ -113,19 +131,16 @@
       <!-- Wallets Table -->
       <div class="adm-card">
         <div class="adm-card-header">
-          <h2>All User Wallets</h2>
-          <button class="adm-btn adm-btn-primary" onclick="loadWallets()">
-            <i class="ri-refresh-line"></i> Refresh
-          </button>
+          <h2>👥 User Wallets</h2>
         </div>
-        <div style="overflow-x: auto;">
+        <div class="adm-table-wrap">
           <table class="adm-table">
             <thead>
               <tr>
-                <th>User ID</th>
-                <th>Balance</th>
+                <th>User UID</th>
+                <th>Current Balance</th>
                 <th>Last Updated</th>
-                <th>Actions</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody id="walletsTableBody">
@@ -138,17 +153,17 @@
       <!-- Recent Transactions Table -->
       <div class="adm-card">
         <div class="adm-card-header">
-          <h2>Recent Transactions (All Users)</h2>
+          <h2>📋 Transaction History</h2>
         </div>
-        <div style="overflow-x: auto;">
+        <div class="adm-table-wrap">
           <table class="adm-table">
             <thead>
               <tr>
-                <th>User ID</th>
-                <th>Type</th>
+                <th>Date & Time</th>
+                <th>UID</th>
                 <th>Amount</th>
-                <th>Description</th>
-                <th>Date</th>
+                <th>Type</th>
+                <th>Reference / Remarks</th>
               </tr>
             </thead>
             <tbody id="txTableBody">

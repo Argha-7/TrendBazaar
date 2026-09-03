@@ -209,3 +209,12 @@ window.submitWalletAdjustment = submitWalletAdjustment;
 document.getElementById('walletModal')?.addEventListener('click', (e) => {
   if (e.target === document.getElementById('walletModal')) closeModal();
 });
+
+document.getElementById('admSidebarOverlay')?.addEventListener('click', function() {
+  document.querySelector('.adm-sidebar')?.classList.remove('open');
+  this.classList.remove('active');
+});
+document.getElementById('admSidebarToggle')?.addEventListener('click', function() {
+  document.getElementById('admSidebarOverlay')?.classList.toggle('active');
+  document.querySelector('.adm-sidebar')?.classList.toggle('open');
+});

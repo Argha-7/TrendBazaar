@@ -1110,9 +1110,19 @@ if (document.readyState === 'loading') {
     // Mobile sidebar toggle
     const sidebarBtn = document.getElementById('admSidebarToggle');
     const sidebar = document.getElementById('admSidebar');
+    const overlay = document.getElementById('admSidebarOverlay');
+    
     if (sidebarBtn && sidebar) {
       sidebarBtn.addEventListener('click', () => {
         sidebar.classList.toggle('open');
+        if (overlay) overlay.classList.toggle('active');
+      });
+    }
+    
+    if (overlay && sidebar) {
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
       });
     }
   });
