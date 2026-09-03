@@ -88,6 +88,11 @@
           <span>Account Settings</span>
         </button>
 
+        <a href="admin_master.html" class="profile-nav-btn" id="tabBtn-adminPanel" style="display: none; color: #8b5cf6; font-weight: 800; text-decoration: none; align-items: center; gap: 12px;">
+          <i class="ri-shield-keyhole-fill" style="color: #8b5cf6;"></i>
+          <span>Admin Portal</span>
+        </a>
+
         <button class="profile-nav-btn" onclick="handleProfileLogout()" style="color: var(--sk-danger); margin-top: 6px;">
           <i class="ri-logout-box-r-line" style="color: var(--sk-danger);"></i>
           <span>Logout</span>
@@ -174,7 +179,7 @@
            5. REFER & EARN CASHBACK REWARDS TAB
            ==================================================== -->
       <div id="profView-refer" class="prof-view-tab" style="display: none;">
-        <div class="profile-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="profile-section-title" style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center;">
           <span>🎁 Refer & Earn Rewards (Up to ₹100)</span>
           <span style="font-size: 0.85rem; color: #10b981; font-weight: 800; background: #ecfdf5; padding: 4px 12px; border-radius: 20px; border: 1px solid #a7f3d0;">
             Wallet Bonus: <strong id="refRewardAmountBadge">₹25</strong>
@@ -205,7 +210,7 @@
           </a>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 16px;">
           <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; text-align: center;">
             <div style="font-size: 1.4rem; font-weight: 900; color: #0f172a;" id="refFriendsCount">2</div>
             <div style="font-size: 0.78rem; color: #64748b; font-weight: 700;">Friends Invited</div>
@@ -225,7 +230,7 @@
            5. MY WALLET TAB
            ==================================================== -->
       <div id="profView-wallet" class="prof-view-tab" style="display: none;">
-        <div class="profile-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="profile-section-title" style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center;">
           <span><i class="ri-wallet-3-fill" style="color: #2563eb;"></i> My Wallet</span>
           <a href="wallet.html" style="font-size: 0.85rem; color: #2563eb; font-weight: 700; text-decoration: none; background: #eff6ff; padding: 6px 14px; border-radius: 20px;">
             <i class="ri-external-link-line"></i> Open Full Wallet
@@ -239,7 +244,7 @@
             <span style="font-size: 1.8rem;">₹</span>
             <span id="profWalletBalance">0</span>
           </div>
-          <div style="margin-top: 20px; display: flex; gap: 12px;">
+          <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 12px;">
             <button onclick="window.location.href='wallet.html'" style="background: #fff; color: #059669; border: none; border-radius: 10px; padding: 10px 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
               <i class="ri-history-line"></i> View History
             </button>

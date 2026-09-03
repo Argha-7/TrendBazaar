@@ -90,6 +90,12 @@ async function loadCustomerData() {
     if (setFullName) setFullName.value = name;
     const setEmail = document.getElementById('setEmail');
     if (setEmail) setEmail.value = email;
+
+    // Show Admin Portal link if Master Admin
+    if (email.toLowerCase().trim() === 'biswajitsingh7899@gmail.com') {
+      const adminTab = document.getElementById('tabBtn-adminPanel');
+      if (adminTab) adminTab.style.display = 'flex';
+    }
   } else {
     // Guest User - Prompt 1-Click Google / Gmail Login
     const avatarEl = document.getElementById('profAvatar');
