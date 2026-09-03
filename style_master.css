@@ -922,6 +922,48 @@ body {
     display: flex !important;
   }
 
+  /* Compact Topbar for Mobile App Feel */
+  .adm-topbar {
+    padding: 0 16px;
+    height: 60px;
+  }
+  .adm-page-title {
+    font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+  }
+  .adm-store-link span,
+  .adm-btn-quick-import span,
+  .adm-user-info-text {
+    display: none;
+  }
+  .adm-store-link,
+  .adm-btn-quick-import {
+    padding: 8px !important;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .adm-avatar-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  .adm-user-profile-chip {
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+  .adm-topbar-left {
+    gap: 8px;
+  }
+  .adm-topbar-right {
+    gap: 6px;
+  }
+
   .adm-kpi-grid {
     grid-template-columns: repeat(2, 1fr);
   }
