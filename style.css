@@ -430,6 +430,10 @@ body {
   .sk-hero-card { height: 220px; }
   .sk-hero-content { padding: 20px; }
   .sk-hero-title { font-size: 1.5rem; }
+  .sk-icon-btn span { display: none; }
+  .sk-icon-btn { font-size: 1.4rem; padding: 6px; }
+  .sk-logo-icon { width: 32px; height: 32px; font-size: 1.1rem; }
+  .sk-logo { font-size: 1.2rem; }
 }
 
 .sk-product-card {
@@ -1841,6 +1845,52 @@ body {
   /* Typography adjust */
   h1 { font-size: 1.6rem !important; }
   h2 { font-size: 1.3rem !important; }
+}
+
+.sk-mobile-bottom-nav { display: none; }
+
+@media (max-width: 768px) {
+  /* Mobile Bottom Nav Bar */
+  .sk-mobile-bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid var(--sk-border);
+    padding: 8px 0;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  }
+  .sk-mobile-bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--sk-text-muted);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 700;
+    gap: 4px;
+  }
+  .sk-mobile-bottom-nav a.active {
+    color: var(--sk-primary);
+  }
+  .sk-mobile-bottom-nav i {
+    font-size: 1.3rem;
+  }
+  
+  /* Modal layout on mobile */
+  .sk-modal-box > div {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    padding: 16px !important;
+  }
+  .sk-main-img-container {
+    height: 300px;
+  }
 }
 
 @media (max-width: 480px) {
