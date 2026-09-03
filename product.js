@@ -99,7 +99,8 @@ async function loadAndRenderProduct(id) {
     },
     description: product.description || 'High quality trending product with cash on delivery and 7-day easy replacement.',
     rating: product.rating || 4.6,
-    reviews: product.reviews || 120
+    reviews: product.reviews || 120,
+    video_url: product.video_url
   };
 
   renderProductDOM(currentProduct);
