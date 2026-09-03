@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const fabricParam = encodeURIComponent(extractedData.specs?.['Fabric / Material'] || extractedData.specs?.['Fabric'] || 'Blended Fabric');
       const patternParam = encodeURIComponent(extractedData.specs?.['Pattern / Style'] || extractedData.specs?.['Pattern'] || 'Classic Design');
 
-      const targetUrl = `http://localhost:8080/admin_add_product.html?title=${encodeURIComponent(extractedData.title)}&cost=${extractedData.price}&price=${selling}&mrp=${mrp}&imgUrl=${encodeURIComponent(extractedData.primaryImage)}&photos=${allImgsParam}&sizes=${sizesParam}&fabric=${fabricParam}&pattern=${patternParam}&desc=${descParam}&link=${encodeURIComponent(extractedData.url)}`;
+      const targetUrl = `https://trend-bazaar-steel.vercel.app/admin_add_product.html?title=${encodeURIComponent(extractedData.title)}&cost=${extractedData.price}&price=${selling}&mrp=${mrp}&imgUrl=${encodeURIComponent(extractedData.primaryImage)}&photos=${allImgsParam}&sizes=${sizesParam}&fabric=${fabricParam}&pattern=${patternParam}&desc=${descParam}&link=${encodeURIComponent(extractedData.url)}`;
 
       chrome.tabs.create({ url: targetUrl });
     });
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnAdmin) {
     btnAdmin.addEventListener('click', () => {
-      chrome.tabs.create({ url: 'http://localhost:8080/admin_master.html' });
+      chrome.tabs.create({ url: 'https://trend-bazaar-steel.vercel.app/admin_master.html' });
     });
   }
 });
