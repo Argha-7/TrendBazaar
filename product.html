@@ -214,10 +214,13 @@
 
     /* Mobile Responsiveness */
     @media (max-width: 768px) {
-      .pdp-grid-container {
+      .pdp-main-grid {
         grid-template-columns: 1fr !important;
         padding: 12px !important;
         gap: 16px !important;
+      }
+      .pdp-sticky-left {
+        position: static !important;
       }
       .pdp-main-img-box {
         height: 350px !important;
@@ -479,6 +482,54 @@
   </footer>
 
   <div class="toast-container" id="skToastContainer"></div>
+
+  <!-- MOBILE BOTTOM NAV BAR (Shows only on mobile) -->
+  <div class="sk-mobile-bottom-nav" style="display: none;">
+    <a href="index.html"><i class="ri-home-5-line"></i><span>Home</span></a>
+    <a href="#" onclick="window.history.back()"><i class="ri-arrow-left-line"></i><span>Back</span></a>
+    <a href="cart.html" style="position: relative;">
+      <i class="ri-shopping-cart-2-line"></i><span>Cart</span>
+      <span class="sk-badge" style="position: absolute; top: 4px; right: 20px; font-size: 0.55rem; width: 14px; height: 14px; border-radius: 50%;">0</span>
+    </a>
+    <a href="profile.html"><i class="ri-user-smile-line"></i><span>Profile</span></a>
+  </div>
+  
+  <style>
+    .sk-mobile-bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--sk-border);
+      padding: 8px 0;
+      z-index: 1000;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+    .sk-mobile-bottom-nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--sk-text-muted);
+      text-decoration: none;
+      font-size: 0.7rem;
+      font-weight: 700;
+      gap: 4px;
+    }
+    .sk-mobile-bottom-nav a.active {
+      color: var(--sk-primary);
+    }
+    .sk-mobile-bottom-nav i {
+      font-size: 1.3rem;
+    }
+    @media (max-width: 768px) {
+      .sk-mobile-bottom-nav { display: flex !important; }
+      body { padding-bottom: 70px; } /* Space for bottom nav */
+    }
+  </style>
 
   <!-- Firebase & Supabase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
