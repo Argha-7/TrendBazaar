@@ -278,6 +278,24 @@ body {
   gap: 12px;
 }
 
+.adm-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: var(--adm-radius-sm);
+  border: 1px solid var(--adm-border);
+  background: var(--adm-surface-subtle);
+  color: var(--adm-text-main);
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.adm-btn-secondary:hover {
+  background: var(--adm-border);
+}
+
 .adm-btn-quick-import {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #fff;
