@@ -1,0 +1,222 @@
+/* ========================================================
+   LOGIN.CSS - DEDICATED AUTH STYLESHEET
+   ======================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap');
+
+:root {
+  --sk-primary: #2563eb;
+  --sk-primary-hover: #1d4ed8;
+  --sk-primary-light: rgba(37, 99, 235, 0.08);
+
+  --sk-bg-main: #f8fafc;
+  --sk-border: #e2e8f0;
+  --sk-text-dark: #0f172a;
+  --sk-text-muted: #64748b;
+
+  --sk-font-main: 'Plus Jakarta Sans', sans-serif;
+  --sk-font-heading: 'Outfit', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--sk-bg-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--sk-font-main);
+}
+
+.sk-auth-container {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--sk-border);
+}
+
+.sk-auth-logo {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--sk-primary);
+}
+
+.sk-auth-logo i {
+  font-size: 2.5rem;
+}
+
+.sk-auth-logo span {
+  font-family: var(--sk-font-heading);
+  font-weight: 900;
+  font-size: 1.5rem;
+}
+
+.sk-tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--sk-border);
+}
+
+.sk-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  font-weight: 800;
+  color: var(--sk-text-muted);
+  cursor: pointer;
+  position: relative;
+  font-size: 0.95rem;
+}
+
+.sk-tab.active {
+  color: var(--sk-primary);
+}
+
+.sk-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--sk-primary);
+}
+
+.sk-auth-title {
+  font-family: var(--sk-font-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--sk-text-dark);
+}
+
+.sk-auth-input {
+  width: 100%;
+  padding: 13px 14px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid var(--sk-border);
+  background: var(--sk-bg-main);
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.sk-auth-input:focus {
+  border-color: var(--sk-primary);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.sk-auth-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  background: var(--sk-primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sk-auth-btn:hover {
+  background: var(--sk-primary-hover);
+}
+
+.sk-auth-switch {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.88rem;
+  color: var(--sk-text-muted);
+}
+
+.sk-auth-switch a {
+  color: var(--sk-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.sk-auth-google-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--sk-border);
+  background: #fff;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--sk-text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sk-auth-google-btn:hover {
+  background: #f8fafc;
+}
+
+.sk-auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 18px 0;
+  color: var(--sk-text-muted);
+  font-size: 0.82rem;
+}
+
+.sk-auth-divider::before, .sk-auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--sk-border);
+}
+.sk-auth-divider:not(:empty)::before { margin-right: .5em; }
+.sk-auth-divider:not(:empty)::after { margin-left: .5em; }
+
+.sk-auth-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: var(--sk-text-muted);
+  text-decoration: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+}
+
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+}
+
+.sk-toast {
+  background: #fff;
+  border: 1px solid var(--sk-primary);
+  color: var(--sk-text-dark);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}

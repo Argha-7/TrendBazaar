@@ -1,0 +1,21 @@
+# ShopKart — India's Favorite Online Shopping Marketplace
+
+[ShopKart](http://localhost:8080/index.html)
+[Admin Portal](http://localhost:8080/admin.html)
+
+# Exclusive Ethnic Wear & Tech Offers
+Up to 80% OFF on Jacquard Silk Sarees, Designer Kurtis, Wireless Headphones & Smart Watches. Guaranteed Quality • Cash on Delivery.
+
+## Product Title
+- 10% Instant Discount on HDFC & SBI Credit Cards
+- ₹1,000 Extra discount with Bank offer on order values above ₹500
+- Free Fast Nationwide Express Shipping on Cash on Delivery
+High quality product with white-label delivery.
+
+## My Saved Wishlist
+
+## Shopping Cart & Checkout
+
+#### Customer Delivery Address
+
+## My Orders & Live Tracking

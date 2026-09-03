@@ -1,0 +1,64 @@
+# ShopKart — India's Premier Online Shopping Marketplace
+
+[ShopKart Plus ✦](http://localhost:8080/index.html)
+[Admin Portal](http://localhost:8080/admin.html)
+
+# Exclusive Ethnic Wear & Tech Mega Sale
+Up to 80% OFF on Jacquard Silk Sarees, Designer Kurtis, Wireless Headphones & Smart Watches. Guaranteed Quality • Cash on Delivery.
+
+## My Saved Wishlist
+
+## Shopping Cart & Checkout
+
+#### Customer Delivery Address
+
+## My Orders & Live Tracking
+
+#### ABOUT
+- [Contact Us](http://localhost:8080)
+- [About Us](http://localhost:8080)
+- [Careers](http://localhost:8080)
+- [ShopKart Stories](http://localhost:8080)
+- [Corporate Information](http://localhost:8080)
+[Contact Us](http://localhost:8080)
+[About Us](http://localhost:8080)
+[Careers](http://localhost:8080)
+[ShopKart Stories](http://localhost:8080)
+[Corporate Information](http://localhost:8080)
+
+#### HELP
+- [Payments](http://localhost:8080)
+- [Shipping](http://localhost:8080)
+- [Cancellation & Returns](http://localhost:8080)
+- [FAQ](http://localhost:8080)
+- [Report Infringement](http://localhost:8080)
+[Payments](http://localhost:8080)
+[Shipping](http://localhost:8080)
+[Cancellation & Returns](http://localhost:8080)
+[FAQ](http://localhost:8080)
+[Report Infringement](http://localhost:8080)
+
+#### CONSUMER POLICY
+- [Cancellation & Returns](http://localhost:8080)
+- [Terms Of Use](http://localhost:8080)
+- [Security](http://localhost:8080)
+- [Privacy Policy](http://localhost:8080)
+- [Sitemap](http://localhost:8080)
+[Cancellation & Returns](http://localhost:8080)
+[Terms Of Use](http://localhost:8080)
+[Security](http://localhost:8080)
+[Privacy Policy](http://localhost:8080)
+[Sitemap](http://localhost:8080)
+
+#### SOCIAL
+- [Facebook](http://localhost:8080)
+- [Twitter](http://localhost:8080)
+- [YouTube](http://localhost:8080)
+- [Instagram](http://localhost:8080)
+[Facebook](http://localhost:8080)
+[Twitter](http://localhost:8080)
+[YouTube](http://localhost:8080)
+[Instagram](http://localhost:8080)
+
+#### REGISTERED OFFICE ADDRESS:
+ShopKart India Private Limited, Buildings Alyssa, Begonia & Clove Embassy Tech Village, Outer Ring Road, Devarabeesanahalli Village, Bengaluru, 560103, Karnataka, India CIN : U51109KA2012PTC066107

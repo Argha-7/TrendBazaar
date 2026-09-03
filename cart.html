@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart & Checkout - TrendBazaar</title>
+  <link rel="stylesheet" href="cart.css">
+  <link rel="stylesheet" href="footer.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body style="background: #f8fafc;">
+
+  <!-- ========================================================
+       TOP HEADER WITH STEPPER PROGRESS BAR (BRAND THEMED)
+       ======================================================== -->
+  <header class="meesho-checkout-header">
+    <div class="meesho-header-inner">
+      <!-- Brand Logo -->
+      <a href="index.html" class="sk-logo" style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
+        <i class="ri-shopping-cart-fill" style="color: var(--sk-primary); font-size: 2rem;"></i>
+        <span style="font-family: var(--sk-font-heading); font-weight: 900; font-size: 1.6rem; color: var(--sk-primary);">TrendBazaar</span>
+      </a>
+
+      <!-- 4-Step Stepper Progress Bar -->
+      <div class="meesho-stepper">
+        <div class="meesho-step active" id="stepper1" onclick="navigateToStep(1)">
+          <div class="meesho-step-circle">1</div>
+          <span class="meesho-step-label">Cart</span>
+        </div>
+        <div class="meesho-step-line" id="line1"></div>
+
+        <div class="meesho-step" id="stepper2" onclick="navigateToStep(2)">
+          <div class="meesho-step-circle">2</div>
+          <span class="meesho-step-label">Address</span>
+        </div>
+        <div class="meesho-step-line" id="line2"></div>
+
+        <div class="meesho-step" id="stepper3" onclick="navigateToStep(3)">
+          <div class="meesho-step-circle">3</div>
+          <span class="meesho-step-label">Payment</span>
+        </div>
+        <div class="meesho-step-line" id="line3"></div>
+
+        <div class="meesho-step" id="stepper4" onclick="navigateToStep(4)">
+          <div class="meesho-step-circle">4</div>
+          <span class="meesho-step-label">Summary</span>
+        </div>
+      </div>
+
+      <!-- Safe & Secure Header Badge -->
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 800; color: #10b981;">
+        <i class="ri-shield-check-fill" style="font-size: 1.2rem;"></i>
+        <span>100% Safe Payments</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       MAIN 2-COLUMN MULTI-STEP CHECKOUT CONTAINER
+       ======================================================== -->
+  <main class="meesho-checkout-container" id="checkoutMainContainer">
+    
+    <!-- LEFT COLUMN: STEP-BY-STEP VIEWS -->
+    <div>
+      <!-- ====================================================
+           STEP 1: PRODUCT DETAILS (CART ITEMS)
+           ==================================================== -->
+      <div id="stepView1" class="checkout-step-section">
+        <h3 class="meesho-card-title" style="margin-bottom: 14px;">Product Details</h3>
+        
+        <div class="meesho-card" id="cartItemsCard">
+          <div id="cartItemsListContainer">
+            <!-- Dynamically populated product cards -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================
+           STEP 2: DELIVERY ADDRESS FORM
+           ==================================================== -->
+      <div id="stepView2" class="checkout-step-section" style="display: none;">
+        <h3 class="meesho-card-title" style="margin-bottom: 14px;">Select Delivery Address</h3>
+        
+        <div class="meesho-card">
+          <div class="meesho-card-header">
+            <span style="font-weight: 800; font-size: 0.95rem;">Add Customer Contact & Address</span>
+            <span style="font-size: 0.78rem; color: var(--sk-primary); font-weight: 700;">All fields required (*)</span>
+          </div>
+
+          <form id="addressForm" onsubmit="handleAddressSubmit(event)" style="padding: 20px;">
+            <div style="font-size: 0.82rem; font-weight: 800; color: #0f172a; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+              <i class="ri-phone-fill" style="color: var(--sk-primary);"></i> Contact Details
+            </div>
+
+            <div class="cart-address-grid" style="padding: 0; margin-bottom: 20px;">
+              <div class="cart-input-group">
+                <label class="cart-input-label">Customer Name *</label>
+                <input type="text" id="custName" class="cart-input-field" placeholder="Full Name" required>
+              </div>
+
+              <div class="cart-input-group">
+                <label class="cart-input-label">10-Digit Mobile Number *</label>
+                <input type="tel" id="custPhone" class="cart-input-field" placeholder="9876543210" pattern="[0-9]{10}" required>
+              </div>
+            </div>
+
+            <div style="font-size: 0.82rem; font-weight: 800; color: #0f172a; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+              <i class="ri-map-pin-2-fill" style="color: var(--sk-primary);"></i> Address Details
+            </div>
+
+            <div class="cart-address-grid" style="padding: 0;">
+              <div class="cart-input-group">
+                <label class="cart-input-label">House No. / Building Name *</label>
+                <input type="text" id="custHouse" class="cart-input-field" placeholder="Flat 204, Galaxy Apt" required>
+              </div>
+
+              <div class="cart-input-group">
+                <label class="cart-input-label">Road Name / Area / Colony *</label>
+                <input type="text" id="custRoad" class="cart-input-field" placeholder="MG Road, Sector 62" required>
+              </div>
+
+              <div class="cart-input-group">
+                <label class="cart-input-label">Pincode *</label>
+                <input type="text" id="custPincode" class="cart-input-field" placeholder="201301" maxlength="6" required>
+              </div>
+
+              <div class="cart-input-group">
+                <label class="cart-input-label">City *</label>
+                <input type="text" id="custCity" class="cart-input-field" placeholder="Noida / Delhi / Mumbai" required>
+              </div>
+
+              <div class="cart-input-group">
+                <label class="cart-input-label">State *</label>
+                <input type="text" id="custState" class="cart-input-field" placeholder="Uttar Pradesh / Maharashtra" required>
+              </div>
+
+              <div class="cart-input-group">
+                <label class="cart-input-label">Nearby Landmark (Optional)</label>
+                <input type="text" id="custLandmark" class="cart-input-field" placeholder="Opposite Metro Pillar 42">
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+              <button type="button" onclick="navigateToStep(1)" style="padding: 10px 18px; border: 1px solid #cbd5e1; background: #fff; border-radius: 6px; font-weight: 700; cursor: pointer;">
+                ← Back to Cart
+              </button>
+              <button type="submit" class="meesho-btn-continue" style="flex: 1;">
+                Save Address and Continue →
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ====================================================
+           STEP 3: PAYMENT METHOD SELECTION
+           ==================================================== -->
+      <div id="stepView3" class="checkout-step-section" style="display: none;">
+        <h3 class="meesho-card-title" style="margin-bottom: 14px;">Select Payment Method</h3>
+
+        <div class="meesho-card">
+          <div style="padding: 20px;">
+            <!-- COD Option (Default) -->
+            <label style="display: flex; align-items: flex-start; gap: 14px; padding: 16px; border: 2px solid var(--sk-primary); background: var(--sk-primary-light); border-radius: 8px; cursor: pointer; margin-bottom: 16px;">
+              <input type="radio" name="payOption" value="COD" checked style="accent-color: var(--sk-primary); transform: scale(1.3); margin-top: 4px;">
+              <div style="flex: 1;">
+                <div style="font-weight: 800; font-size: 1rem; color: #0f172a; display: flex; align-items: center; justify-content: space-between;">
+                  <span><i class="ri-hand-coin-fill" style="color: var(--sk-primary);"></i> Cash on Delivery (COD)</span>
+                  <span style="font-size: 0.72rem; background: #10b981; color: #fff; padding: 2px 8px; border-radius: 4px;">RECOMMENDED</span>
+                </div>
+                <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">
+                  Pay cash or scan UPI when the delivery executive arrives at your doorstep. Zero Extra Charges.
+                </div>
+              </div>
+            </label>
+
+            <!-- UPI Option -->
+            <label style="display: flex; align-items: flex-start; gap: 14px; padding: 16px; border: 1px solid #e2e8f0; background: #fff; border-radius: 8px; cursor: pointer; margin-bottom: 16px;">
+              <input type="radio" name="payOption" value="UPI" style="accent-color: var(--sk-primary); transform: scale(1.3); margin-top: 4px;">
+              <div style="flex: 1;">
+                <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">
+                  <i class="ri-qr-code-fill" style="color: #10b981;"></i> UPI / Instant Online Pay
+                </div>
+                <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">
+                  Google Pay, PhonePe, Paytm, BHIM & NetBanking.
+                </div>
+              </div>
+            </label>
+
+
+
+            <div style="margin-top: 24px; display: flex; gap: 10px;">
+              <button type="button" onclick="navigateToStep(2)" style="padding: 10px 18px; border: 1px solid #cbd5e1; background: #fff; border-radius: 6px; font-weight: 700; cursor: pointer;">
+                ← Back to Address
+              </button>
+              <button type="button" onclick="navigateToStep(4)" class="meesho-btn-continue" style="flex: 1;">
+                Continue to Summary →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================
+           STEP 4: ORDER SUMMARY & FINAL REVIEW
+           ==================================================== -->
+      <div id="stepView4" class="checkout-step-section" style="display: none;">
+        <h3 class="meesho-card-title" style="margin-bottom: 14px;">Order Summary</h3>
+
+        <!-- Estimated Delivery Banner -->
+        <div style="background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; padding: 14px 18px; border-radius: 8px; margin-bottom: 18px; font-size: 0.88rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+          <i class="ri-truck-fill" style="font-size: 1.2rem;"></i>
+          <span>Estimated Delivery: <strong>Tomorrow, by 11:00 AM (Express COD)</strong></span>
+        </div>
+
+        <!-- Customer Address Review Card -->
+        <div class="meesho-card" style="margin-bottom: 18px;">
+          <div class="meesho-card-header">
+            <span style="font-weight: 800; font-size: 0.92rem;">Delivery Address</span>
+            <button onclick="navigateToStep(2)" style="color: var(--sk-primary); font-weight: 800; font-size: 0.78rem; background: none; border: none; cursor: pointer;">EDIT</button>
+          </div>
+          <div style="padding: 16px 20px; font-size: 0.86rem;">
+            <strong id="sumCustomerName" style="color: #0f172a; font-size: 0.95rem;">Customer Name</strong><br>
+            <span id="sumCustomerAddress" style="color: #475569; display: block; margin: 4px 0;">House No, Street, City, State - Pincode</span>
+            <span style="color: #0f172a; font-weight: 700;">Phone: <span id="sumCustomerPhone" style="color: var(--sk-primary);">9876543210</span></span>
+          </div>
+        </div>
+
+        <!-- Product Items Review Card -->
+        <div class="meesho-card" style="margin-bottom: 18px;">
+          <div class="meesho-card-header">
+            <span style="font-weight: 800; font-size: 0.92rem;">Product Details</span>
+            <button onclick="navigateToStep(1)" style="color: var(--sk-primary); font-weight: 800; font-size: 0.78rem; background: none; border: none; cursor: pointer;">EDIT</button>
+          </div>
+          <div id="summaryItemsList">
+            <!-- Dynamic summary items -->
+          </div>
+        </div>
+
+        <!-- Payment Mode Review -->
+        <div class="meesho-card">
+          <div class="meesho-card-header">
+            <span style="font-weight: 800; font-size: 0.92rem;">Payment Mode</span>
+          </div>
+          <div style="padding: 16px 20px; font-size: 0.88rem; font-weight: 800; color: #10b981; display: flex; align-items: center; gap: 8px;">
+            <i class="ri-checkbox-circle-fill" style="font-size: 1.2rem;"></i>
+            <span>Cash on Delivery (Pay at Doorstep)</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; display: flex; gap: 10px;">
+          <button type="button" onclick="navigateToStep(3)" style="padding: 10px 18px; border: 1px solid #cbd5e1; background: #fff; border-radius: 6px; font-weight: 700; cursor: pointer;">
+            ← Back to Payment
+          </button>
+          <button type="button" onclick="submitFinalOrder()" class="meesho-btn-continue" style="flex: 1; background: #059669;">
+            <i class="ri-flashlight-fill"></i> Place Order (Cash on Delivery)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: PRICE DETAILS & PROMO CODES -->
+    <div>
+      
+      <!-- PROMO / COUPON CODE CARD -->
+      <div class="meesho-price-card" style="margin-bottom: 16px;">
+        <div style="font-weight: 800; font-size: 0.92rem; color: #0f172a; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+          <i class="ri-coupon-3-fill" style="color: #2874f0; font-size: 1.15rem;"></i>
+          <span>Apply Offers & Promo Codes</span>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="cartCouponInput" placeholder="Enter Coupon (e.g. TREND50)" style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; outline: none; letter-spacing: 1px;" onkeypress="if(event.key==='Enter'){event.preventDefault();applyCartCoupon();}">
+          <button type="button" id="btnApplyCoupon" onclick="applyCartCoupon()" style="background: #0f172a; color: #fff; border: none; padding: 0 16px; border-radius: 6px; font-weight: 800; font-size: 0.82rem; cursor: pointer;">
+            Apply
+          </button>
+        </div>
+
+        <!-- Applied Coupon Status Chip -->
+        <div id="appliedCouponTag" style="display: none; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 6px; padding: 8px 12px; margin-top: 10px; font-size: 0.8rem; color: #065f46; font-weight: 700; justify-content: space-between; align-items: center;">
+          <span>🎉 Code <strong id="appliedCouponCodeText">TREND50</strong> Applied!</span>
+          <button type="button" onclick="removeCartCoupon()" style="background: none; border: none; color: #ef4444; font-weight: 800; cursor: pointer; text-decoration: underline; font-size: 0.78rem;">Remove</button>
+        </div>
+
+        <!-- Trending Coupon Chips -->
+        <div style="margin-top: 12px;">
+          <div style="font-size: 0.74rem; font-weight: 700; color: #64748b; margin-bottom: 6px;">Available Store Offers:</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="availableCouponsContainer">
+            <span onclick="autoFillCoupon('TREND50')" style="background: #eff6ff; border: 1px dashed #3b82f6; color: #1d4ed8; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; cursor: pointer;">TREND50 (₹50 OFF)</span>
+            <span onclick="autoFillCoupon('WELCOME100')" style="background: #eff6ff; border: 1px dashed #3b82f6; color: #1d4ed8; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; cursor: pointer;">WELCOME100 (₹100 OFF)</span>
+            <span onclick="autoFillCoupon('SAVE10')" style="background: #eff6ff; border: 1px dashed #3b82f6; color: #1d4ed8; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; cursor: pointer;">SAVE10 (10% OFF)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="meesho-price-card">
+        <div class="meesho-price-header">Price Details (<span id="sideItemCount">1</span> Items)</div>
+
+        <div class="meesho-price-row">
+          <span>Product Price (MRP)</span>
+          <span id="sideProductPrice">+ ₹0</span>
+        </div>
+
+        <div class="meesho-price-row">
+          <span>Wholesale Discount</span>
+          <span id="sideDiscount" style="color: #10b981; font-weight: 700;">- ₹0</span>
+        </div>
+
+        <div class="meesho-price-row" id="sideCouponRow" style="display: none;">
+          <span>Coupon Promo Discount</span>
+          <span id="sideCouponDiscount" style="color: #10b981; font-weight: 800;">- ₹0</span>
+        </div>
+
+        <div class="meesho-price-row">
+          <span>Delivery Charges</span>
+          <span><s style="color: #94a3b8; font-size: 0.8rem;">₹99</s> <strong style="color: #10b981;">FREE</strong></span>
+        </div>
+
+        <div class="meesho-price-row total">
+          <span>Order Total</span>
+          <span id="sideOrderTotal">₹0</span>
+        </div>
+
+        <div class="meesho-discount-chip" id="sideSavingsChip">
+          <i class="ri-checkbox-circle-fill"></i>
+          <span>Yay! Your total discount is ₹0</span>
+        </div>
+
+        <div class="meesho-micro-copy">
+          Clicking on 'Continue' will not deduct any money
+        </div>
+
+        <button class="meesho-btn-continue" id="btnMainContinue" onclick="handleMainContinueClick()">
+          Continue
+        </button>
+      </div>
+
+      <!-- Trust Box -->
+      <div class="meesho-trust-box">
+        <div style="font-size: 2rem; color: var(--sk-primary);"><i class="ri-shield-user-fill"></i></div>
+        <div class="meesho-trust-text">
+          <h5>Your Safety, Our Priority</h5>
+          <p>We make sure that your package is sanitized and safe at every point of contact.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================
+       STEP 5: GRAND ORDER SUCCESS CONFIRMATION SCREEN
+       ======================================================== -->
+  <section id="orderSuccessScreen" style="display: none; max-width: 720px; margin: 40px auto; padding: 40px 24px; text-align: center; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.06);">
+    <div style="width: 76px; height: 76px; border-radius: 50%; background: #d1fae5; color: #10b981; font-size: 2.8rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+      <i class="ri-checkbox-circle-fill"></i>
+    </div>
+
+    <h2 style="font-family: var(--sk-font-heading); font-size: 1.8rem; font-weight: 900; color: #0f172a; margin-bottom: 6px;">
+      Order Placed Successfully! 🎉
+    </h2>
+    <p style="color: #64748b; font-size: 0.92rem; margin-bottom: 24px;">
+      Your order has been registered and verified for priority express courier dispatch.
+    </p>
+
+    <!-- Reference & Transaction Details Box -->
+    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 24px; text-align: left;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <span style="color: #64748b; font-size: 0.85rem;">Order Reference ID:</span>
+        <strong style="color: var(--sk-primary); font-family: monospace; font-size: 1rem;" id="placedOrderIdTag">#TB-ORD-89218</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <span style="color: #64748b; font-size: 0.85rem;">Transaction / Tracking ID:</span>
+        <strong style="color: #0f172a; font-family: monospace; font-size: 0.95rem;" id="placedTxnIdTag">TXN-COD-91028374</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <span style="color: #64748b; font-size: 0.85rem;">Payment Mode:</span>
+        <strong style="color: #0f172a;" id="placedPaymentModeTag">Cash on Delivery (COD)</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <span style="color: #64748b; font-size: 0.85rem;">Estimated Doorstep Delivery:</span>
+        <strong style="color: #10b981;"><i class="ri-truck-line"></i> Expected in 2-4 Business Days</strong>
+      </div>
+    </div>
+
+    <!-- Action Buttons (Print Invoice + Shopping) -->
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <button type="button" onclick="openInvoiceModal()" class="meesho-btn-continue" style="display: inline-flex; width: auto; padding: 12px 24px; background: #0f172a; border-color: #0f172a;">
+        <i class="ri-file-text-line"></i> View & Print Invoice Bill
+      </button>
+      <a href="index.html" class="meesho-btn-continue" style="display: inline-flex; width: auto; padding: 12px 28px; text-decoration: none;">
+        <i class="ri-store-2-fill"></i> Continue Shopping
+      </a>
+      <a href="profile.html#orders" class="meesho-btn-continue" style="display: inline-flex; width: auto; padding: 12px 24px; background: #fff; color: #0f172a; border: 1px solid #cbd5e1; text-decoration: none;">
+        <i class="ri-truck-fill"></i> Track in Orders
+      </a>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       OFFICIAL PRINTABLE TAX / GST INVOICE MODAL
+       ======================================================== -->
+  <div id="invoiceModal" class="adm-modal-overlay" style="display: none; z-index: 2000;">
+    <div class="adm-modal-content" style="max-width: 780px; padding: 0; overflow: hidden; background: #fff;">
+      
+      <!-- Top Action Bar (Print & Close) -->
+      <div style="background: #0f172a; color: #fff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;" class="no-print">
+        <div style="font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+          <i class="ri-file-list-3-line" style="color: #38bdf8;"></i> Tax Invoice & Packing Slip
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="window.print()" style="background: #2874f0; color: #fff; border: none; padding: 6px 16px; border-radius: 4px; font-weight: 800; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            <i class="ri-printer-fill"></i> Print / Save PDF
+          </button>
+          <button onclick="closeInvoiceModal()" style="background: rgba(255,255,255,0.15); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 800; cursor: pointer;">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Printable Invoice Sheet Area -->
+      <div id="printableInvoiceSheet" style="padding: 32px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0f172a; font-size: 0.88rem; background: #fff;">
+        
+        <!-- Header: Logo & Store Info -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0f172a; padding-bottom: 18px; margin-bottom: 20px;">
+          <div>
+            <h2 style="font-family: var(--sk-font-heading); font-size: 1.6rem; font-weight: 900; color: #2874f0; margin-bottom: 4px;">TrendBazaar</h2>
+            <div style="font-size: 0.78rem; color: #64748b; line-height: 1.4;">
+              TrendBazaar Wholesale Dropshipping Hub Pvt. Ltd.<br>
+              GSTIN: <strong>07AABCT2391K1Z2</strong> | CIN: U51909DL2024PTC109822<br>
+              Plot 42, Logistics Park, New Delhi, 110037, India<br>
+              Email: support@trendbazaar.com | Ph: +91 1800-208-9898
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 1.25rem; font-weight: 900; color: #0f172a; text-transform: uppercase;">TAX INVOICE</div>
+            <div style="font-size: 0.82rem; margin-top: 4px;">
+              Invoice No: <strong id="invNumTag" style="font-family: monospace;">INV-TB-89218</strong><br>
+              Invoice Date: <span id="invDateTag">03 Sep 2026</span><br>
+              Payment Mode: <strong id="invPayModeTag" style="color: #10b981;">Cash on Delivery</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Meta Grid: Transaction & Customer Details -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+          <div>
+            <div style="font-size: 0.76rem; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 4px;">Billed & Shipped To:</div>
+            <strong style="font-size: 0.95rem; color: #0f172a;" id="invCustName">Customer Name</strong>
+            <div id="invCustAddress" style="font-size: 0.82rem; color: #475569; margin-top: 2px; line-height: 1.4;">
+              House 123, Road 4, City, State - 110001
+            </div>
+            <div style="font-size: 0.82rem; color: #475569; margin-top: 4px;">
+              Phone: <strong id="invCustPhone">+91 9876543210</strong>
+            </div>
+          </div>
+          <div style="border-left: 1px solid #e2e8f0; padding-left: 16px;">
+            <div style="font-size: 0.76rem; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 4px;">Transaction Details:</div>
+            <div style="font-size: 0.82rem; margin-bottom: 4px;">
+              Transaction ID: <strong id="invTxnIdTag" style="font-family: monospace; color: #2874f0;">TXN-COD-91028374</strong>
+            </div>
+            <div style="font-size: 0.82rem; margin-bottom: 4px;">
+              Order ID: <strong id="invOrderIdTag" style="font-family: monospace;">#TB-ORD-89218</strong>
+            </div>
+            <div style="font-size: 0.82rem; color: #10b981; font-weight: 700;">
+              <i class="ri-checkbox-circle-fill"></i> Order Verified & Dispatched
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Line Items Table -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.85rem;">
+          <thead>
+            <tr style="background: #0f172a; color: #fff; text-align: left;">
+              <th style="padding: 10px 12px; border-radius: 4px 0 0 0;">#</th>
+              <th style="padding: 10px 12px;">Product Description</th>
+              <th style="padding: 10px 12px;">Variant / Size</th>
+              <th style="padding: 10px 12px; text-align: center;">Qty</th>
+              <th style="padding: 10px 12px; text-align: right;">Unit Price</th>
+              <th style="padding: 10px 12px; text-align: right; border-radius: 0 4px 0 0;">Total Amount</th>
+            </tr>
+          </thead>
+          <tbody id="invItemsTbody">
+            <!-- Dynamic invoice rows injected by JS -->
+          </tbody>
+        </table>
+
+        <!-- Price Summary & Stamp -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
+          <div style="max-width: 320px;">
+            <div style="font-size: 0.76rem; color: #64748b; margin-bottom: 6px;">
+              <strong>Terms & Conditions:</strong><br>
+              1. Goods covered under 7-Day Easy Replacement Policy.<br>
+              2. Keep this invoice copy for warranty & courier verification.<br>
+              3. This is a computer-generated commercial tax invoice.
+            </div>
+            <div style="font-family: monospace; font-size: 0.85rem; letter-spacing: 2px; color: #94a3b8; margin-top: 12px;">
+              ||||| |||||| |||| | |||||| |||| ||||
+            </div>
+          </div>
+
+          <div style="min-width: 260px;">
+            <table style="width: 100%; font-size: 0.85rem;">
+              <tr>
+                <td style="color: #64748b; padding: 4px 0;">Subtotal (MRP):</td>
+                <td style="text-align: right; font-weight: 700;" id="invGrossSubtotal">₹1,999</td>
+              </tr>
+              <tr>
+                <td style="color: #10b981; padding: 4px 0;">Wholesale Discount:</td>
+                <td style="text-align: right; font-weight: 700; color: #10b981;" id="invTotalDiscount">- ₹1,000</td>
+              </tr>
+              <tr>
+                <td style="color: #64748b; padding: 4px 0;">Delivery / Freight:</td>
+                <td style="text-align: right; font-weight: 800; color: #10b981;">FREE (₹0)</td>
+              </tr>
+              <tr style="border-top: 2px solid #0f172a;">
+                <td style="font-weight: 900; font-size: 1.05rem; padding: 8px 0; color: #0f172a;">Total Payable:</td>
+                <td style="text-align: right; font-weight: 900; font-size: 1.15rem; color: #2874f0; padding: 8px 0;" id="invGrandTotal">₹999</td>
+              </tr>
+            </table>
+            
+            <div style="text-align: right; margin-top: 16px;">
+              <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase;">Authorized Signatory</div>
+              <div style="font-family: 'Outfit', cursive; font-size: 1.1rem; color: #2874f0; font-weight: 800; margin-top: 2px;">TrendBazaar Verified</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EDIT QUANTITY & SIZE MODAL -->
+  <div id="editItemModal" class="adm-modal-overlay" style="display: none;">
+    <div class="adm-modal-content" style="max-width: 420px;">
+      <div class="adm-modal-header">
+        <h3 class="adm-modal-title">Edit Item Variant</h3>
+        <button class="adm-modal-close" onclick="closeEditModal()">&times;</button>
+      </div>
+      <div class="adm-modal-body">
+        <div style="margin-bottom: 16px;">
+          <label class="cart-input-label">Select Size / Variant:</label>
+          <select id="editModalSizeSelect" class="cart-input-field" style="width: 100%; margin-top: 6px;">
+            <option value="Free Size">Free Size</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label class="cart-input-label">Select Quantity:</label>
+          <div class="cart-qty-picker" style="width: 120px; margin-top: 6px;">
+            <button class="cart-qty-btn" onclick="adjustEditModalQty(-1)">-</button>
+            <span class="cart-qty-val" id="editModalQtyVal">1</span>
+            <button class="cart-qty-btn" onclick="adjustEditModalQty(1)">+</button>
+          </div>
+        </div>
+
+        <button onclick="saveItemEdit()" class="meesho-btn-continue">
+          Update Item
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="skToastContainer"></div>
+
+  <!-- Firebase & Supabase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="auth.js"></script>
+  <script src="cart.js"></script>
+</body>
+</html>

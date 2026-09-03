@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile & Orders - TrendBazaar</title>
+  <link rel="stylesheet" href="profile.css">
+  <link rel="stylesheet" href="footer.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ========================================================
+       TOP HEADER NAVIGATION BAR
+       ======================================================== -->
+  <header class="sk-header">
+    <div class="sk-header-container">
+      <a href="index.html" class="sk-logo">
+        <i class="ri-shopping-cart-fill"></i>
+        <span>TrendBazaar</span>
+      </a>
+
+      <!-- Search Input -->
+      <div class="sk-search-box">
+        <i class="ri-search-line sk-search-icon"></i>
+        <input type="text" id="skSearchInput" class="sk-search-input" placeholder="Search for products, brands and more..." oninput="handleSearchInput()">
+      </div>
+
+      <!-- Header Actions -->
+      <div class="sk-header-actions">
+        <a href="index.html" class="sk-icon-btn" title="Home Store">
+          <i class="ri-home-5-line"></i>
+        </a>
+
+        <a href="cart.html" class="sk-icon-btn" title="Cart">
+          <i class="ri-shopping-bag-3-line"></i>
+          <span class="sk-badge-count" id="cartCountBadge">0</span>
+        </a>
+
+        <a href="profile.html" class="sk-icon-btn active" title="My Profile" style="color: var(--sk-primary);">
+          <i class="ri-user-3-fill"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       MAIN 2-COLUMN PROFILE & DASHBOARD CONTAINER
+       ======================================================== -->
+  <main class="profile-page-container">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="profile-sidebar">
+      <div class="profile-user-card">
+        <div class="profile-avatar" id="profAvatar">U</div>
+        <div class="profile-user-name" id="profUserName">Customer Account</div>
+        <div class="profile-user-email" id="profUserEmail">guest@trendbazaar.com</div>
+      </div>
+
+      <nav class="profile-nav-list">
+        <button class="profile-nav-btn active" onclick="switchProfileTab('orders')" id="tabBtn-orders">
+          <i class="ri-truck-line"></i>
+          <span>My Orders & Tracking</span>
+        </button>
+
+        <button class="profile-nav-btn" onclick="switchProfileTab('wishlist')" id="tabBtn-wishlist">
+          <i class="ri-heart-3-line"></i>
+          <span>My Wishlist</span>
+        </button>
+
+        <button class="profile-nav-btn" onclick="switchProfileTab('address')" id="tabBtn-address">
+          <i class="ri-map-pin-line"></i>
+          <span>Delivery Addresses</span>
+        </button>
+
+        <button class="profile-nav-btn" onclick="switchProfileTab('refer')" id="tabBtn-refer" style="color: #059669; font-weight: 800;">
+          <i class="ri-gift-2-fill" style="color: #059669;"></i>
+          <span>🎁 Refer & Earn (Up to ₹100)</span>
+        </button>
+
+        <button class="profile-nav-btn" onclick="switchProfileTab('wallet')" id="tabBtn-wallet" style="color: #2563eb; font-weight: 800;">
+          <i class="ri-wallet-3-fill" style="color: #2563eb;"></i>
+          <span>💳 My Wallet</span>
+        </button>
+
+        <button class="profile-nav-btn" onclick="switchProfileTab('settings')" id="tabBtn-settings">
+          <i class="ri-settings-3-line"></i>
+          <span>Account Settings</span>
+        </button>
+
+        <button class="profile-nav-btn" onclick="handleProfileLogout()" style="color: var(--sk-danger); margin-top: 6px;">
+          <i class="ri-logout-box-r-line" style="color: var(--sk-danger);"></i>
+          <span>Logout</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- RIGHT CONTENT AREA -->
+    <section class="profile-content-card">
+      
+      <!-- ====================================================
+           1. MY ORDERS & TRACKING TAB
+           ==================================================== -->
+      <div id="profView-orders" class="prof-view-tab">
+        <div class="profile-section-title">
+          <span><i class="ri-truck-fill" style="color: var(--sk-primary);"></i> My Orders & Live Tracking</span>
+          <span class="adm-badge adm-badge-blue" id="profOrderCountTag">0 Orders</span>
+        </div>
+
+        <div id="profOrdersList">
+          <!-- Dynamically populated customer orders -->
+        </div>
+      </div>
+
+      <!-- ====================================================
+           2. MY WISHLIST TAB
+           ==================================================== -->
+      <div id="profView-wishlist" class="prof-view-tab" style="display: none;">
+        <div class="profile-section-title">
+          <span><i class="ri-heart-3-fill" style="color: var(--sk-danger);"></i> Saved Wishlist Items</span>
+          <span class="adm-badge adm-badge-warning" id="profWishlistCountTag">0 Items</span>
+        </div>
+
+        <div id="profWishlistGrid" class="sk-products-grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+          <!-- Dynamically populated wishlist items -->
+        </div>
+      </div>
+
+      <!-- ====================================================
+           3. SAVED DELIVERY ADDRESSES TAB
+           ==================================================== -->
+      <div id="profView-address" class="prof-view-tab" style="display: none;">
+        <div class="profile-section-title">
+          <span><i class="ri-map-pin-2-fill" style="color: var(--sk-primary);"></i> Saved Delivery Addresses</span>
+          <button class="sk-btn-primary" onclick="openAddAddressPrompt()" style="padding: 6px 14px; font-size: 0.8rem;">+ Add New Address</button>
+        </div>
+
+        <div id="profAddressList">
+          <!-- Saved addresses -->
+        </div>
+      </div>
+
+      <!-- ====================================================
+           4. ACCOUNT SETTINGS TAB
+           ==================================================== -->
+      <div id="profView-settings" class="prof-view-tab" style="display: none;">
+        <div class="profile-section-title">
+          <span><i class="ri-user-settings-fill" style="color: var(--sk-primary);"></i> Personal Information</span>
+        </div>
+
+        <form id="profSettingsForm" onsubmit="saveProfileSettings(event)" style="max-width: 480px;">
+          <div class="cart-input-group" style="margin-bottom: 16px;">
+            <label class="cart-input-label">Full Name</label>
+            <input type="text" id="setFullName" class="cart-input-field" placeholder="Full Name">
+          </div>
+
+          <div class="cart-input-group" style="margin-bottom: 16px;">
+            <label class="cart-input-label">Mobile Number</label>
+            <input type="tel" id="setPhone" class="cart-input-field" placeholder="10-digit mobile number">
+          </div>
+
+          <div class="cart-input-group" style="margin-bottom: 24px;">
+            <label class="cart-input-label">Email Address (Read-only)</label>
+            <input type="email" id="setEmail" class="cart-input-field" disabled style="opacity: 0.7;">
+          </div>
+
+          <button type="submit" class="sk-btn-primary" style="padding: 12px 24px;">
+            Save Changes
+          </button>
+        </form>
+      </div>
+
+      <!-- ====================================================
+           5. REFER & EARN CASHBACK REWARDS TAB
+           ==================================================== -->
+      <div id="profView-refer" class="prof-view-tab" style="display: none;">
+        <div class="profile-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>🎁 Refer & Earn Rewards (Up to ₹100)</span>
+          <span style="font-size: 0.85rem; color: #10b981; font-weight: 800; background: #ecfdf5; padding: 4px 12px; border-radius: 20px; border: 1px solid #a7f3d0;">
+            Wallet Bonus: <strong id="refRewardAmountBadge">₹25</strong>
+          </span>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe; border-radius: 12px; padding: 24px; margin-bottom: 24px; text-align: center;">
+          <div style="font-size: 2.4rem; color: #2563eb; margin-bottom: 8px;"><i class="ri-gift-line"></i></div>
+          <h3 style="font-size: 1.3rem; font-weight: 800; color: #1e3a8a; margin-bottom: 6px;">Invite Friends & Earn Instant Cashback (Up to ₹100)</h3>
+          <p id="refServerNotice" style="font-size: 0.88rem; color: #3b82f6; max-width: 480px; margin: 0 auto 20px;">
+            Server-Calculated Reward: Each friend gets instant discount (up to ₹100) on their first order and you get equal wallet cashback!
+          </p>
+
+          <!-- Unique Code & Copy Card -->
+          <div style="background: #fff; border-radius: 8px; border: 1.5px dashed #2563eb; padding: 14px 20px; max-width: 420px; margin: 0 auto 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 800;">Your Server-Verified Referral Code</div>
+              <strong id="myReferralCodeTag" style="font-family: monospace; font-size: 1.25rem; color: #1e40af; letter-spacing: 2px;">TB-REF8921</strong>
+            </div>
+            <button type="button" onclick="copyReferralCode()" style="background: #2563eb; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 800; font-size: 0.82rem; cursor: pointer;">
+              Copy Code
+            </button>
+          </div>
+
+          <!-- 1-Click WhatsApp Share Button -->
+          <a id="btnShareWhatsApp" href="https://api.whatsapp.com/send?text=Hey!%20Check%20out%20TrendBazaar%20for%20awesome%20wholesale%20fashion%20%26%20gadgets.%20Use%20my%20invite%20code%20TB-REF8921%20for%20Instant%20Discount%20(Min%20%E2%82%B910%20-%20Max%20%E2%82%B950)%20on%20your%20first%20order:%20http://localhost:8080/index.html" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #22c55e; color: #fff; font-weight: 800; font-size: 0.95rem; padding: 12px 28px; border-radius: 30px; text-decoration: none; box-shadow: 0 4px 14px rgba(34,197,94,0.35);">
+            <i class="ri-whatsapp-fill" style="font-size: 1.3rem;"></i> Share on WhatsApp
+          </a>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 900; color: #0f172a;" id="refFriendsCount">2</div>
+            <div style="font-size: 0.78rem; color: #64748b; font-weight: 700;">Friends Invited</div>
+          </div>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 900; color: #10b981;" id="refOrdersCount">1</div>
+            <div style="font-size: 0.78rem; color: #64748b; font-weight: 700;">Successful Orders</div>
+          </div>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; text-align: center;">
+            <div style="font-size: 1.25rem; font-weight: 900; color: #2563eb;">Up to ₹100</div>
+            <div style="font-size: 0.78rem; color: #64748b; font-weight: 700;">Reward Per Referral</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================
+           5. MY WALLET TAB
+           ==================================================== -->
+      <div id="profView-wallet" class="prof-view-tab" style="display: none;">
+        <div class="profile-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+          <span><i class="ri-wallet-3-fill" style="color: #2563eb;"></i> My Wallet</span>
+          <a href="wallet.html" style="font-size: 0.85rem; color: #2563eb; font-weight: 700; text-decoration: none; background: #eff6ff; padding: 6px 14px; border-radius: 20px;">
+            <i class="ri-external-link-line"></i> Open Full Wallet
+          </a>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #10b981, #059669); border-radius: 16px; padding: 28px; color: #fff; margin-bottom: 20px; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+          <div style="font-size: 0.9rem; font-weight: 600; opacity: 0.85; margin-bottom: 8px;">WALLET BALANCE</div>
+          <div style="font-size: 3rem; font-weight: 900; display: flex; align-items: baseline; gap: 6px;">
+            <span style="font-size: 1.8rem;">₹</span>
+            <span id="profWalletBalance">0</span>
+          </div>
+          <div style="margin-top: 20px; display: flex; gap: 12px;">
+            <button onclick="window.location.href='wallet.html'" style="background: #fff; color: #059669; border: none; border-radius: 10px; padding: 10px 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+              <i class="ri-history-line"></i> View History
+            </button>
+            <button onclick="window.location.href='index.html'" style="background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4); border-radius: 10px; padding: 10px 18px; font-weight: 700; cursor: pointer;">
+              <i class="ri-shopping-bag-3-fill"></i> Shop Now
+            </button>
+          </div>
+        </div>
+
+        <div id="profWalletTxPreview" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;">
+          <div style="font-weight: 800; font-size: 1rem; margin-bottom: 16px;">Recent Activity</div>
+          <div id="profWalletTxList" style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="text-align: center; color: #94a3b8; padding: 20px;"><i class="ri-loader-4-line"></i> Loading...</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ========================================================
+       PREMIUM FOOTER
+       ======================================================== -->
+  <footer class="sk-footer-wrap">
+    <div class="sk-footer-bottom-bar">
+      <div class="sk-footer-bottom-inner">
+        <div class="sk-footer-perks">
+          <div class="sk-footer-perk"><i class="ri-store-2-fill"></i> Become a Seller</div>
+          <div class="sk-footer-perk"><i class="ri-gift-fill"></i> Gift Cards</div>
+          <div class="sk-footer-perk"><i class="ri-questionnaire-fill"></i> Help Center</div>
+        </div>
+
+        <div class="sk-footer-copy">© 2026 TrendBazaar. All rights reserved.</div>
+      </div>
+    </div>
+  <!-- ========================================================
+       CANCEL ORDER MODAL (FLIPKART STYLE)
+       ======================================================== -->
+  <div id="cancelOrderModal" class="editor-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.7); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #fff; border-radius: 12px; width: 100%; max-width: 460px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+      
+      <div style="padding: 18px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+          <i class="ri-close-circle-line" style="color: #ef4444;"></i> Request Order Cancellation
+        </h3>
+        <button type="button" onclick="closeCancelModal()" style="background: none; border: none; font-size: 1.3rem; color: #94a3b8; cursor: pointer;">✕</button>
+      </div>
+
+      <div style="padding: 24px;">
+        <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.85rem; color: #991b1b;">
+          <strong>Order Reference:</strong> <span id="cancelOrderIdText" style="font-family: monospace; font-weight: 800;">#ORD-1</span><br>
+          <span style="font-size: 0.78rem;">Once cancelled, you won't be charged for Cash on Delivery.</span>
+        </div>
+
+        <label class="cart-input-label" style="display: block; margin-bottom: 8px; font-weight: 700;">Please select reason for cancellation *</label>
+        <select id="cancelReasonSelect" class="cart-input-field" style="width: 100%; margin-bottom: 16px;">
+          <option value="I want to change the delivery address">I want to change the delivery address</option>
+          <option value="Ordered by mistake / Duplicate order">Ordered by mistake / Duplicate order</option>
+          <option value="Found better price or product elsewhere">Found better price or product elsewhere</option>
+          <option value="Delivery time is too long">Delivery time is too long</option>
+          <option value="Need to change product size or color">Need to change product size or color</option>
+          <option value="Other personal reason">Other personal reason</option>
+        </select>
+
+        <label class="cart-input-label" style="display: block; margin-bottom: 6px; font-weight: 700;">Additional Comments (Optional):</label>
+        <textarea id="cancelReasonNote" class="cart-input-field" rows="2" placeholder="Tell us more about why you are cancelling..." style="width: 100%; margin-bottom: 20px;"></textarea>
+
+        <div style="display: flex; gap: 10px;">
+          <button type="button" onclick="closeCancelModal()" style="flex: 1; padding: 12px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 700; cursor: pointer;">
+            Don't Cancel
+          </button>
+          <button type="button" onclick="confirmOrderCancellation()" style="flex: 1; padding: 12px; background: #dc2626; color: #fff; border: none; border-radius: 6px; font-weight: 800; cursor: pointer;">
+            Confirm Cancel
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast-container" id="skToastContainer"></div>
+
+  <!-- Firebase & Supabase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="auth.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>

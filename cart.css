@@ -1,0 +1,579 @@
+/* ========================================================
+   CART.CSS - DEDICATED MULTI-STEP CHECKOUT STYLES
+   (SYNCHRONIZED WITH MAIN WEBSITE THEME COLOR)
+   ======================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap');
+
+:root {
+  --sk-primary: #2874f0; /* Default Royal Theme Blue - Dynamically configurable from Admin */
+  --sk-primary-hover: #1e5fc2;
+  --sk-primary-light: rgba(40, 116, 240, 0.08);
+  
+  --sk-success: #388e3c;
+  --sk-danger: #ef4444;
+  --sk-warning: #f59e0b;
+
+  --sk-bg-main: #f8fafc;
+  --sk-bg-surface: #ffffff;
+
+  --sk-border: #e2e8f0;
+  --sk-border-strong: #cbd5e1;
+
+  --sk-text-dark: #0f172a;
+  --sk-text-muted: #64748b;
+  --sk-text-light: #94a3b8;
+
+  --sk-font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --sk-font-heading: 'Outfit', sans-serif;
+
+  --sk-radius-sm: 6px;
+  --sk-radius-md: 10px;
+  --sk-radius-lg: 16px;
+
+  --sk-shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --sk-shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--sk-bg-main);
+  color: var(--sk-text-dark);
+  font-family: var(--sk-font-main);
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* ========================================================
+   HEADER & 4-STEP STEPPER PROGRESS BAR
+   ======================================================== */
+.meesho-checkout-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--sk-border);
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.meesho-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.meesho-stepper {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.meesho-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  cursor: pointer;
+}
+
+.meesho-step-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  transition: all 0.25s ease;
+}
+
+.meesho-step-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #94a3b8;
+  transition: all 0.25s ease;
+}
+
+.meesho-step.active .meesho-step-circle {
+  border-color: var(--sk-primary);
+  background: var(--sk-primary);
+  color: #fff;
+  box-shadow: 0 0 0 3px var(--sk-primary-light);
+}
+
+.meesho-step.active .meesho-step-label {
+  color: var(--sk-primary);
+  font-weight: 800;
+}
+
+.meesho-step.completed .meesho-step-circle {
+  border-color: var(--sk-success);
+  background: var(--sk-success);
+  color: #fff;
+}
+
+.meesho-step.completed .meesho-step-label {
+  color: var(--sk-success);
+}
+
+.meesho-step-line {
+  width: 40px;
+  height: 2px;
+  background: #e2e8f0;
+  margin-top: -16px;
+}
+
+.meesho-step-line.active {
+  background: var(--sk-primary);
+}
+
+/* ========================================================
+   2-COLUMN CHECKOUT LAYOUT
+   ======================================================== */
+.meesho-checkout-container {
+  max-width: 1180px;
+  margin: 32px auto 60px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .meesho-checkout-container {
+    grid-template-columns: 1fr;
+    margin: 16px auto;
+    padding: 0 12px;
+  }
+}
+
+.meesho-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.meesho-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.meesho-card-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.meesho-card-body {
+  padding: 20px;
+}
+
+/* Product Item Row */
+.meesho-item-card {
+  display: flex;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  position: relative;
+}
+
+.meesho-item-card:last-child {
+  border-bottom: none;
+}
+
+.meesho-item-img {
+  width: 76px;
+  height: 76px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+
+.meesho-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.meesho-item-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.3;
+  padding-right: 50px;
+}
+
+.meesho-item-pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 2px 0;
+}
+
+.meesho-price-current {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.meesho-price-mrp {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.meesho-discount-tag {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--sk-success);
+}
+
+.meesho-badge-returns {
+  font-size: 0.74rem;
+  color: #64748b;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meesho-meta-row {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.meesho-btn-remove {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meesho-btn-remove:hover {
+  color: #ef4444;
+}
+
+.meesho-btn-edit {
+  color: var(--sk-primary);
+  font-weight: 800;
+  font-size: 0.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+
+.meesho-supplier-row {
+  background: #f8fafc;
+  padding: 10px 20px;
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 600;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* ========================================================
+   PRICE DETAILS SIDEBAR CARD
+   ======================================================== */
+.meesho-price-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.meesho-price-header {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+.meesho-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+.meesho-price-row.total {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 14px;
+  margin-top: 14px;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.meesho-discount-chip {
+  background: #d1fae5;
+  color: #065f46;
+  font-size: 0.84rem;
+  font-weight: 800;
+  padding: 10px 14px;
+  border-radius: 6px;
+  text-align: center;
+  margin: 16px 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.meesho-micro-copy {
+  font-size: 0.74rem;
+  color: #64748b;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.meesho-btn-continue {
+  background: var(--sk-primary);
+  color: #ffffff;
+  border: none;
+  width: 100%;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px var(--sk-primary-light);
+}
+
+.meesho-btn-continue:hover {
+  background: var(--sk-primary-hover);
+  transform: translateY(-1px);
+}
+
+.meesho-trust-box {
+  margin-top: 20px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.meesho-trust-box i {
+  font-size: 2rem;
+  color: var(--sk-primary);
+}
+
+.meesho-trust-text h5 {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+}
+
+.meesho-trust-text p {
+  font-size: 0.72rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Address Form */
+.cart-address-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .cart-address-grid { grid-template-columns: 1fr; }
+}
+
+.cart-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cart-input-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sk-text-muted);
+}
+
+.cart-input-field {
+  padding: 10px 14px;
+  border: 1px solid var(--sk-border);
+  border-radius: 6px;
+  background: var(--sk-bg-main);
+  font-size: 0.9rem;
+  color: var(--sk-text-dark);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.cart-input-field:focus {
+  border-color: var(--sk-primary);
+  background: #fff;
+}
+
+/* Modals */
+.adm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.adm-modal-content {
+  background: #ffffff;
+  border: 1px solid var(--sk-border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.adm-modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--sk-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.adm-modal-title {
+  font-family: var(--sk-font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--sk-text-dark);
+}
+
+.adm-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--sk-text-muted);
+  cursor: pointer;
+}
+
+.adm-modal-body {
+  padding: 20px;
+}
+
+.cart-qty-picker {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--sk-border);
+  border-radius: 6px;
+  background: var(--sk-bg-main);
+}
+
+.cart-qty-btn {
+  background: transparent;
+  border: none;
+  width: 34px;
+  height: 32px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.cart-qty-val {
+  padding: 0 12px;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sk-toast {
+  background: #fff;
+  border: 1px solid var(--sk-primary);
+  color: var(--sk-text-dark);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Print Styling for Tax Invoice */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #invoiceModal, #invoiceModal * {
+    visibility: visible;
+  }
+  #invoiceModal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    background: transparent;
+    padding: 0;
+  }
+  .adm-modal-content {
+    box-shadow: none;
+    border: none;
+    max-width: 100% !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

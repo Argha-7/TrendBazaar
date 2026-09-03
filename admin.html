@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting to Master Admin...</title>
+  <script>
+    // Intelligent Forwarder
+    const params = window.location.search;
+    if (params && params.includes('title=')) {
+      window.location.replace('admin_add_product.html' + params);
+    } else {
+      window.location.replace('admin_master.html' + params);
+    }
+  </script>
+</head>
+<body style="background: #0b0f19; color: #fff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh;">
+  <div style="text-align: center;">
+    <h2>Redirecting to TrendBazaar Admin...</h2>
+    <p style="color: #94a3b8;">If you are not redirected automatically, <a href="admin_add_product.html" style="color: #38bdf8;">click here</a>.</p>
+  </div>
+</body>
+</html>

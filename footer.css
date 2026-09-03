@@ -1,0 +1,212 @@
+/* ========================================================
+   FOOTER.CSS - DEDICATED E-COMMERCE FOOTER STYLESHEET
+   ======================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap');
+
+/* ========================================================
+   PREMIUM FLIPKART/MEESHO STYLE STORE FOOTER & TRUST BANNER
+   ======================================================== */
+.sk-footer-wrap {
+  margin-top: 50px;
+  background: #172337;
+  color: #878787;
+  font-size: 0.82rem;
+  border-top: 1px solid #283549;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  width: 100%;
+  clear: both;
+}
+
+/* TRUST FEATURES & ASSURANCE BAR */
+.sk-trust-features-bar {
+  background: #21314d;
+  padding: 24px 20px;
+  border-bottom: 1px solid #2d3f5e;
+}
+
+.sk-trust-features-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.sk-trust-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #ffffff;
+}
+
+.sk-trust-feature-item i {
+  font-size: 2rem;
+  color: #fbbf24;
+  flex-shrink: 0;
+}
+
+.sk-trust-feature-item h4 {
+  font-size: 0.92rem;
+  font-weight: 800;
+  margin: 0;
+  color: #ffffff;
+}
+
+.sk-trust-feature-item p {
+  font-size: 0.76rem;
+  color: #94a3b8;
+  margin: 2px 0 0 0;
+}
+
+/* 4-COLUMN MAIN FOOTER CONTENT */
+.sk-footer-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 20px 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+}
+
+.sk-footer-col h3 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: #878787;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+  font-weight: 800;
+}
+
+.sk-footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sk-footer-col ul li {
+  list-style: none;
+}
+
+.sk-footer-col ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+.sk-footer-col ul li a:hover {
+  color: #2874f0;
+  text-decoration: underline;
+}
+
+.sk-footer-contact-text {
+  color: #ffffff;
+  line-height: 1.6;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.sk-footer-contact-text strong {
+  color: #ffffff;
+}
+
+.sk-footer-contact-text a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.sk-footer-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.sk-footer-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #283549;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.sk-footer-socials a:hover {
+  background: #2874f0;
+  transform: translateY(-2px);
+}
+
+/* BOTTOM BAR WITH COPYRIGHT & PAYMENT PARTNERS */
+.sk-footer-bottom-bar {
+  border-top: 1px solid #283549;
+  padding: 24px 20px 30px;
+  background: #121c2c;
+}
+
+.sk-footer-bottom-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sk-footer-perks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.sk-footer-perk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.sk-footer-perk i {
+  color: #fbbf24;
+  font-size: 1rem;
+}
+
+.sk-footer-copy {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.sk-payment-badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #cbd5e1;
+  font-size: 1.4rem;
+}
+
+@media (max-width: 768px) {
+  .sk-footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .sk-footer-bottom-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .sk-footer-perks {
+    justify-content: center;
+  }
+  .sk-payment-badges {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details — TrendBazaar</title>
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Shop verified products on TrendBazaar with Cash on Delivery and Free Express Shipping.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="product.css">
+  <link rel="stylesheet" href="footer.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    /* DYNAMIC PDP CORE STYLES */
+    .pdp-page-container {
+      max-width: 1320px;
+      margin: 16px auto 60px;
+      padding: 0 20px;
+    }
+
+    .pdp-breadcrumb-bar {
+      font-size: 0.82rem;
+      color: var(--sk-text-muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pdp-breadcrumb-bar a {
+      color: var(--sk-text-muted);
+      text-decoration: none;
+    }
+
+    .pdp-breadcrumb-bar a:hover {
+      color: var(--sk-primary);
+    }
+
+    .pdp-main-grid {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 32px;
+      background: #ffffff;
+      border: 1px solid var(--sk-border);
+      border-radius: var(--sk-radius-md);
+      padding: 24px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .pdp-main-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 16px;
+      }
+    }
+
+    .pdp-sticky-left {
+      position: sticky;
+      top: 90px;
+    }
+
+    .pdp-image-stage {
+      width: 100%;
+      height: 440px;
+      border-radius: var(--sk-radius-sm);
+      background: #f8fafc;
+      border: 1px solid var(--sk-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pdp-image-stage img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .pdp-image-stage:hover img {
+      transform: scale(1.04);
+    }
+
+    .pdp-gallery-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 6px 0 10px;
+      margin-top: 10px;
+    }
+
+    .pdp-thumb-item {
+      width: 62px;
+      height: 62px;
+      border-radius: 6px;
+      border: 2px solid var(--sk-border);
+      background: #f8fafc;
+      object-fit: cover;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .pdp-thumb-item:hover, .pdp-thumb-item.active {
+      border-color: var(--sk-primary);
+      box-shadow: 0 0 0 2px rgba(40, 116, 240, 0.2);
+    }
+
+    .pdp-action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .btn-pdp-cart {
+      background: #ff9f00;
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(255, 159, 0, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-pdp-cart:hover {
+      background: #f39700;
+      transform: translateY(-1px);
+    }
+
+    .btn-pdp-buy {
+      background: #fb641b;
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(251, 100, 27, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-pdp-buy:hover {
+      background: #ea5610;
+      transform: translateY(-1px);
+    }
+
+    .size-chip-btn {
+      padding: 8px 18px;
+      border: 1px solid var(--sk-border);
+      background: #f8fafc;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--sk-text-dark);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .size-chip-btn.active {
+      border-color: var(--sk-primary);
+      background: #ebf3ff;
+      color: var(--sk-primary);
+      box-shadow: 0 0 0 1px var(--sk-primary);
+    }
+
+    .pdp-spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-top: 8px;
+    }
+
+    .pdp-spec-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .pdp-spec-table td:first-child {
+      color: var(--sk-text-muted);
+      font-weight: 700;
+      width: 32%;
+    }
+
+    /* Skeleton Loader */
+    .pdp-skeleton {
+      animation: skeleton-pulse 1.5s infinite;
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+    }
+
+    @keyframes skeleton-pulse {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FLIPKART SIGNATURE BLUE TOPBAR -->
+  <header style="background: #2874f0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.12); width: 100%;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" style="text-decoration: none; display: flex; flex-direction: column; line-height: 1.1; flex-shrink: 0;">
+        <span style="font-family: 'Outfit', sans-serif; font-size: 1.45rem; font-weight: 900; color: #ffffff; letter-spacing: -0.5px;">TrendBazaar</span>
+        <span style="font-size: 0.72rem; font-style: italic; color: #ffe500; font-weight: 800;">Explore <span style="color: #ffffff;">Plus ✦</span></span>
+      </a>
+
+      <!-- Global Search Bar -->
+      <div style="flex: 1; max-width: 580px; position: relative;">
+        <input type="text" id="skSearchInput" placeholder="Search for products, brands and more..." onkeypress="handleSearchKey(event)" style="width: 100%; padding: 10px 16px 10px 42px; border-radius: 2px; border: none; outline: none; font-size: 0.88rem; background: #ffffff; box-shadow: 0 1px 4px rgba(0,0,0,0.15);">
+        <i class="ri-search-line" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #878787; font-size: 1.1rem;"></i>
+      </div>
+
+      <!-- Header Action Items -->
+      <div style="display: flex; align-items: center; gap: 24px; flex-shrink: 0;">
+        <a href="profile.html#wishlist" style="color: #ffffff; text-decoration: none; display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.9rem;">
+          <i class="ri-heart-3-fill" style="font-size: 1.2rem;"></i>
+          <span>Wishlist</span>
+        </a>
+
+        <a href="cart.html" style="color: #ffffff; text-decoration: none; display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.92rem; position: relative;">
+          <div style="position: relative; display: flex; align-items: center;">
+            <i class="ri-shopping-cart-2-fill" style="font-size: 1.35rem;"></i>
+            <span id="cartBadge" style="position: absolute; top: -8px; right: -10px; background: #ff6161; color: #fff; font-size: 0.68rem; font-weight: 900; border-radius: 10px; padding: 1px 6px; border: 1.5px solid #2874f0;">0</span>
+          </div>
+          <span style="margin-left: 4px;">Cart</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN DYNAMIC PRODUCT DETAILS CONTAINER -->
+  <main class="pdp-page-container">
+    
+    <!-- DYNAMIC BREADCRUMB -->
+    <div class="pdp-breadcrumb-bar">
+      <a href="index.html">Home</a> <i class="ri-arrow-right-s-line"></i>
+      <span id="dynBreadCategory" style="color: var(--sk-primary); font-weight: 700;">Ethnic Wear</span> <i class="ri-arrow-right-s-line"></i>
+      <span id="dynBreadTitle" style="color: var(--sk-text-dark); font-weight: 700;">Loading product...</span>
+    </div>
+
+    <!-- MAIN PRODUCT GRID -->
+    <div class="pdp-main-grid" id="pdpMainStage">
+      
+      <!-- LEFT STICKY COLUMN: IMAGES & BUY ACTION -->
+      <div class="pdp-sticky-left">
+        <div class="pdp-image-stage">
+          <img id="dynMainImg" src="" alt="Product Cover Photo">
+          <span class="fk-assured-badge" style="position: absolute; top: 12px; left: 12px; font-size: 0.75rem; padding: 3px 8px; background: #2874f0; color: #fff; font-weight: 800; border-radius: 2px;">
+            SK-Assured <i class="ri-checkbox-circle-fill"></i>
+          </span>
+          <span id="dynPhotoCounter" style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.8); color: #34d399; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px;">
+            📸 Photo 1 of 1
+          </span>
+        </div>
+
+        <!-- MULTI-PHOTO GALLERY THUMBNAILS -->
+        <div style="margin-top: 14px;">
+          <div style="font-size: 0.78rem; color: var(--sk-text-muted); font-weight: 700; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span><i class="ri-image-line"></i> ALL HD PHOTOS (CLICK TO VIEW):</span>
+            <span id="dynGalleryCountTag" style="color: #2874f0; font-weight: 800;">1 Photo</span>
+          </div>
+          
+          <div id="dynGalleryStrip" class="pdp-gallery-strip">
+            <!-- Dynamic thumbnails injected by JS -->
+          </div>
+        </div>
+
+        <!-- 1-CLICK DUAL ACTION BUTTONS -->
+        <div class="pdp-action-grid">
+          <button type="button" onclick="handlePdpAddToCart()" class="btn-pdp-cart">
+            <i class="ri-shopping-cart-2-fill"></i> ADD TO CART
+          </button>
+          <button type="button" onclick="handlePdpBuyNow()" class="btn-pdp-buy">
+            <i class="ri-flashlight-fill"></i> BUY NOW (COD)
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: DETAILS, PRICING, SIZES & SPECS -->
+      <div>
+        <h1 id="dynTitle" style="font-family: var(--sk-font-heading); font-size: 1.45rem; font-weight: 800; line-height: 1.35; margin-bottom: 8px; color: var(--sk-text-dark);">
+          Loading product title...
+        </h1>
+
+        <!-- RATINGS ROW -->
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+          <div class="sk-rating-chip" id="dynRating" style="background: #388e3c; color: #fff; font-size: 0.85rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">
+            4.6 <i class="ri-star-fill"></i>
+          </div>
+          <span style="color: var(--sk-text-muted); font-size: 0.85rem; font-weight: 700;" id="dynReviews">
+            120 Ratings & Reviews
+          </span>
+          <span style="color: #16a34a; font-size: 0.82rem; font-weight: 800;">
+            <i class="ri-shield-check-fill"></i> Verified Meesho Wholesale Supplier
+          </span>
+        </div>
+
+        <!-- PRICE BLOCK -->
+        <div style="background: #f8fafc; border: 1px solid var(--sk-border); border-radius: 8px; padding: 14px 18px; margin-bottom: 18px;">
+          <div style="font-size: 0.8rem; color: #16a34a; font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">
+            Special Wholesale Deal Price
+          </div>
+          <div style="display: flex; align-items: baseline; gap: 12px;">
+            <span id="dynSellingPrice" style="font-size: 2rem; font-weight: 900; color: #0f172a; font-family: var(--sk-font-heading);">₹499</span>
+            <span id="dynMrpPrice" style="font-size: 1rem; color: #94a3b8; text-decoration: line-through;">₹1,099</span>
+            <span id="dynDiscountTag" style="font-size: 1rem; font-weight: 800; color: #16a34a;">55% off</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: #f59e0b; font-weight: 700; margin-top: 6px;">
+            <i class="ri-coin-fill"></i> Earn 10 SuperCoins on this Cash on Delivery order
+          </div>
+        </div>
+
+        <!-- AVAILABLE BANK OFFERS -->
+        <div style="border: 1px dashed #93c5fd; background: #eff6ff; border-radius: 8px; padding: 14px; margin-bottom: 20px;">
+          <div style="font-weight: 800; color: #1e40af; font-size: 0.88rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <i class="ri-bank-card-fill"></i> Available Bank & Special Offers:
+          </div>
+          <ul style="margin: 0; padding-left: 18px; font-size: 0.82rem; color: #1e3a8a; line-height: 1.6;">
+            <li><strong>Bank Offer:</strong> 10% Instant Discount on HDFC & Axis Bank Cards</li>
+            <li><strong>COD Offer:</strong> Extra ₹50 cashback on Cash on Delivery orders</li>
+            <li><strong>Free Delivery:</strong> All India Express 2-Day Shipping included</li>
+          </ul>
+        </div>
+
+        <!-- SIZES & VARIANTS SELECTOR -->
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 0.88rem; font-weight: 800; color: var(--sk-text-dark); margin-bottom: 8px; display: block;">
+            Select Size / Variant:
+          </label>
+          <div id="dynSizesContainer" style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <!-- Dynamic size pills -->
+          </div>
+        </div>
+
+        <!-- DELIVERY PINCODE ESTIMATOR -->
+        <div style="background: #ffffff; border: 1px solid var(--sk-border); border-radius: 8px; padding: 14px; margin-bottom: 20px;">
+          <div style="font-size: 0.84rem; font-weight: 800; color: var(--sk-text-dark); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <i class="ri-map-pin-2-fill" style="color: #2874f0;"></i> Delivery & Serviceability:
+          </div>
+          <div style="display: flex; gap: 8px; max-width: 360px;">
+            <input type="text" id="pdpPinInput" class="sk-search-input" placeholder="Enter 6-digit Pincode..." maxlength="6" style="padding: 8px 12px; font-size: 0.85rem; border: 1px solid var(--sk-border); border-radius: 4px; outline: none; width: 100%;">
+            <button type="button" onclick="checkPdpPincode()" style="padding: 8px 18px; background: var(--sk-primary); color: #fff; font-weight: 800; border: none; border-radius: 4px; cursor: pointer;">
+              Check
+            </button>
+          </div>
+          <div id="pdpPinResultMsg" style="font-size: 0.8rem; margin-top: 6px;"></div>
+        </div>
+
+        <!-- DYNAMIC SPECIFICATIONS TABLE -->
+        <div style="margin-bottom: 24px;">
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--sk-text-dark); margin-bottom: 10px; border-bottom: 1px solid var(--sk-border); padding-bottom: 8px;">
+            Product Specifications
+          </h3>
+          <table class="pdp-spec-table" id="dynSpecTable">
+            <!-- Dynamic key-value pairs -->
+          </table>
+        </div>
+
+        <!-- FULL DESCRIPTION -->
+        <div>
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--sk-text-dark); margin-bottom: 10px; border-bottom: 1px solid var(--sk-border); padding-bottom: 8px;">
+            Product Description
+          </h3>
+          <div id="dynDescription" style="font-size: 0.88rem; color: var(--sk-text-muted); line-height: 1.6; white-space: pre-line;">
+            <!-- Dynamic description text -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SUGGESTED PRODUCTS BOTTOM SLIDER -->
+    <div style="margin-top: 48px;">
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--sk-text-dark); margin-bottom: 16px;">
+        Similar Trending Products You May Like
+      </h3>
+      <div id="dynSuggestedGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;">
+        <!-- Dynamic suggested products -->
+      </div>
+    </div>
+
+  </main>
+
+  <div class="toast-container" id="skToastContainer"></div>
+
+  <!-- Firebase & Supabase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="auth.js"></script>
+  <script src="product.js"></script>
+</body>
+</html>

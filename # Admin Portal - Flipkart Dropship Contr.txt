@@ -1,0 +1,15 @@
+# Admin Portal - Flipkart Dropship Control Center
+
+[View Flipkart Store](http://localhost:8080/index.html)
+
+# Dashboard Overview
+[Open Flipkart Storefront](http://localhost:8080/index.html)
+
+### Import Product from Meesho Link
+Paste any Meesho product URL below. The multi-proxy engine will auto-extract images, title & price.
+
+#### Product Title
+
+### Customer Orders
+
+### Live Catalog Manager

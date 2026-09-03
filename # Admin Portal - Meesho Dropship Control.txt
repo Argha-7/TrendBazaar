@@ -1,0 +1,13 @@
+# Admin Portal - Meesho Dropship Control Center
+
+[View Customer Store](http://localhost:8080/index.html)
+
+# Dashboard Overview
+[Open Customer Storefront](http://localhost:8080/index.html)
+
+### Instant Meesho Product Importer
+Paste any Meesho Product URL below to extract exact Title, Price & Images.
+
+### Customer Orders
+
+### Live Catalog Manager

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add & Edit Product — TrendBazaar Master Admin</title>
+  <link rel="stylesheet" href="admin_add_product.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ========================================================
+       STICKY FULL-WIDTH TOPBAR (CLEAN, SPACED & PROFESSIONAL)
+       ======================================================== -->
+  <header class="editor-topbar">
+    <div class="editor-topbar-inner">
+      <div class="editor-topbar-left">
+        <a href="admin_master.html#products" class="btn-back-catalog">
+          <i class="ri-arrow-left-line"></i> Back to Catalog
+        </a>
+        <h1 class="editor-title" id="pageMainHeading">
+          <i class="ri-add-circle-fill" style="color: #38bdf8;"></i> Add New Product
+        </h1>
+      </div>
+
+      <div class="editor-topbar-right">
+        <a href="index.html" target="_blank" class="btn-view-store">
+          <i class="ri-external-link-line" style="color: #38bdf8;"></i> View Storefront
+        </a>
+
+        <button type="button" onclick="handlePublishProductForm(event)" class="btn-publish-main" id="btnTopPublish">
+          <i class="ri-checkbox-circle-fill"></i> <span id="btnPublishLabel">Publish to Storefront</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       MAIN 2-COLUMN PRODUCT EDITOR
+       ======================================================== -->
+  <main class="editor-main-container">
+    
+    <!-- LEFT COLUMN: PRODUCT DETAILS, MEDIA & SPECS -->
+    <div>
+      <form id="productMainForm" onsubmit="handlePublishProductForm(event)">
+        
+        <!-- CARD 1: BASIC DETAILS -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <div class="editor-card-header-left">
+              <i class="ri-information-line"></i>
+              <span>Basic Product Information</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label class="editor-label">Product Title / Heading *</label>
+            <input type="text" id="pTitle" class="editor-input" placeholder="e.g. Womens Chinon Silk Zari Buti Saree with Fancy Lace Border" required oninput="updateLiveCardPreview()">
+          </div>
+
+          <div class="editor-grid-2">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="editor-label" style="margin-bottom: 0;">Category *</label>
+                <button type="button" onclick="openCategoryManagerModal()" style="background: none; border: none; color: #38bdf8; font-size: 0.78rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 4px; background: rgba(56, 189, 248, 0.1);">
+                  <i class="ri-add-circle-line"></i> + Add / Remove Category
+                </button>
+              </div>
+              <select id="pCategory" class="editor-input" onchange="updateLiveCardPreview()" style="cursor: pointer;">
+                <!-- Populated dynamically by JS -->
+              </select>
+            </div>
+
+            <div>
+              <label class="editor-label">Supplier / Brand Tag</label>
+              <input type="text" id="pSupplier" class="editor-input" placeholder="e.g. Hill Top Fashion / TrendBazaar Verified">
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: ADVANCED MULTI-IMAGE UPLOADER & GALLERY -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <div class="editor-card-header-left">
+              <i class="ri-image-add-line"></i>
+              <span>Product Photos & High-Res Gallery</span>
+            </div>
+            <span style="font-size: 0.74rem; color: #34d399; font-weight: 700;" id="photoCountBadge">0 Photos Selected</span>
+          </div>
+
+          <!-- DRAG & DROP UPLOAD ZONE -->
+          <div class="upload-dropzone" id="dropZone" onclick="document.getElementById('fileUploadInput').click()">
+            <input type="file" id="fileUploadInput" multiple accept="image/*" style="display: none;" onchange="handleLocalFilesSelected(event)">
+            <i class="ri-upload-cloud-2-line"></i>
+            <h4>Click to Upload Images or Drag & Drop Here</h4>
+            <p>PNG, JPG, WEBP formats supported (Upload multiple photos at once)</p>
+          </div>
+
+          <!-- OR PASTE URL BAR -->
+          <div style="background: var(--edit-surface-subtle); border: 1px solid var(--edit-border); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+            <label class="editor-label">Or Add Image by Direct URL:</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="url" id="singleUrlInput" class="editor-input" placeholder="Paste image URL (https://...)" style="background: var(--edit-surface);">
+              <button type="button" onclick="handleAddSingleUrl()" class="btn-publish-main" style="white-space: nowrap; padding: 0 16px; background: #0284c7;">
+                + Add Photo
+              </button>
+            </div>
+          </div>
+
+          <!-- UPLOADED PHOTOS GALLERY MANAGER -->
+          <label class="editor-label">Active Gallery Photos (Hover on photo to Set as Cover or Delete):</label>
+          <div id="uploadedGalleryContainer" class="uploaded-gallery-grid">
+            <!-- Dynamically populated photo cards -->
+          </div>
+        </div>
+
+        <!-- CARD 3: SIZES & SPECIFICATIONS -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <div class="editor-card-header-left">
+              <i class="ri-list-settings-line"></i>
+              <span>Variants & Fabric Specifications</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label class="editor-label">Available Sizes / Variants (Click to Toggle):</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;">
+              <span class="size-pill active" onclick="toggleSizePill(this)">Free Size</span>
+              <span class="size-pill" onclick="toggleSizePill(this)">S</span>
+              <span class="size-pill" onclick="toggleSizePill(this)">M</span>
+              <span class="size-pill" onclick="toggleSizePill(this)">L</span>
+              <span class="size-pill" onclick="toggleSizePill(this)">XL</span>
+              <span class="size-pill" onclick="toggleSizePill(this)">XXL</span>
+              <span class="size-pill" onclick="toggleSizePill(this)">Standard</span>
+            </div>
+          </div>
+
+          <div class="editor-grid-2">
+            <div>
+              <label class="editor-label">Fabric / Material</label>
+              <input type="text" id="pFabric" class="editor-input" placeholder="e.g. Jacquard Silk Blend / Pure Cotton">
+            </div>
+
+            <div>
+              <label class="editor-label">Pattern / Work Style</label>
+              <input type="text" id="pPattern" class="editor-input" placeholder="e.g. Heavy Zari Embroidery Lace">
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4: FULL DESCRIPTION -->
+        <div class="editor-card">
+          <div class="editor-card-header">
+            <div class="editor-card-header-left">
+              <i class="ri-file-text-line"></i>
+              <span>Full Description & Highlights</span>
+            </div>
+          </div>
+
+          <div>
+            <textarea id="pDescription" class="editor-textarea" placeholder="Enter full detailed product description, wash care, fabric details and package contents..."></textarea>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- RIGHT COLUMN: PRICING, PROFIT ENGINE & PREVIEW -->
+    <div>
+      
+      <!-- CARD 5: MEESHO 1-CLICK IMPORT -->
+      <div class="editor-card" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, #111827 100%); border-color: rgba(56, 189, 248, 0.3);">
+        <div class="editor-card-header" style="border-color: rgba(56, 189, 248, 0.2);">
+          <div class="editor-card-header-left">
+            <i class="ri-flashlight-fill" style="color: #f59e0b;"></i>
+            <span>Meesho 1-Click Import Tool</span>
+          </div>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #94a3b8; margin-bottom: 12px; line-height: 1.4;">
+          Paste any Meesho product URL to open and auto-extract high-res photos, supplier cost & description.
+        </p>
+
+        <div style="display: flex; gap: 8px;">
+          <input type="url" id="meeshoUrlInput" class="editor-input" placeholder="https://www.meesho.com/s/p/...">
+          <button type="button" onclick="openMeeshoForExtract()" class="btn-publish-main" style="white-space: nowrap; padding: 0 16px; background: #0284c7;">
+            Open Meesho ↗
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD 6: PRICING & PROFIT ENGINE -->
+      <div class="editor-card">
+        <div class="editor-card-header">
+          <div class="editor-card-header-left">
+            <i class="ri-money-dollar-circle-line" style="color: #10b981;"></i>
+            <span>Pricing & Profit Breakdown</span>
+          </div>
+        </div>
+
+        <div class="editor-grid-3">
+          <div>
+            <label class="editor-label">Cost Price (₹) *</label>
+            <input type="number" id="pCost" class="editor-input" placeholder="450" required oninput="recalculateProfitEngine()">
+          </div>
+
+          <div>
+            <label class="editor-label">Selling Price (₹) *</label>
+            <input type="number" id="pPrice" class="editor-input" placeholder="899" required oninput="recalculateProfitEngine()">
+          </div>
+
+          <div>
+            <label class="editor-label">MRP (₹) *</label>
+            <input type="number" id="pMrp" class="editor-input" placeholder="2499" required oninput="recalculateProfitEngine()">
+          </div>
+        </div>
+
+        <!-- PROFIT SUMMARY CARD -->
+        <div class="profit-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 700;">Net Profit Per Unit:</span>
+            <strong style="font-size: 1.4rem; color: #10b981;" id="calcProfitAmount">+ ₹449</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #94a3b8;">
+            <span>Profit Margin: <strong style="color: #ffffff;" id="calcProfitMargin">50%</strong></span>
+            <span>Customer Discount: <strong style="color: #10b981;" id="calcDiscountTag">64% OFF</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 7: LIVE STOREFRONT PRODUCT CARD PREVIEW -->
+      <div class="editor-card">
+        <div class="editor-card-header">
+          <div class="editor-card-header-left">
+            <i class="ri-eye-line"></i>
+            <span>Storefront Card Live Preview</span>
+          </div>
+        </div>
+
+        <div class="live-preview-card">
+          <div class="live-preview-img-wrap">
+            <img id="prevCardImg" class="live-preview-img" src="assets/hero_fashion.jpg" onerror="this.src='assets/hero_fashion.jpg'">
+          </div>
+
+          <div class="live-preview-body">
+            <div id="prevCardTitle" class="live-preview-title">
+              Sample Product Title
+            </div>
+
+            <div class="live-preview-price-row">
+              <span id="prevCardPrice" class="live-preview-price">₹899</span>
+              <span id="prevCardMrp" class="live-preview-mrp">₹2499</span>
+              <span id="prevCardDiscount" class="live-preview-discount">64% off</span>
+            </div>
+
+            <div class="live-preview-perks">
+              <i class="ri-checkbox-circle-fill"></i> Free Delivery • Cash on Delivery
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  <!-- CATEGORY MANAGER MODAL -->
+  <div id="categoryManagerModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: var(--edit-surface); border: 1px solid var(--edit-border); border-radius: 12px; width: 100%; max-width: 480px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.6);">
+      
+      <div style="padding: 16px 20px; border-bottom: 1px solid var(--edit-border); display: flex; justify-content: space-between; align-items: center; background: var(--edit-surface-subtle);">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; margin: 0;">
+          <i class="ri-folder-settings-line" style="color: #38bdf8;"></i> Manage Product Categories
+        </h3>
+        <button type="button" onclick="closeCategoryManagerModal()" style="background: none; border: none; color: #94a3b8; font-size: 1.3rem; cursor: pointer; padding: 0;">✕</button>
+      </div>
+
+      <div style="padding: 20px;">
+        <!-- Add New Category Input -->
+        <label class="editor-label">Add New Category:</label>
+        <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+          <input type="text" id="newCategoryInput" class="editor-input" placeholder="e.g. Kids Wear / Jewelry / Smart Home" style="flex: 1; background: var(--edit-bg);" onkeypress="if(event.key==='Enter'){event.preventDefault();addNewCategory();}">
+          <button type="button" onclick="addNewCategory()" class="btn-publish-main" style="padding: 0 16px; background: #0284c7; white-space: nowrap; border-radius: 6px;">
+            + Add
+          </button>
+        </div>
+
+        <!-- Categories List -->
+        <label class="editor-label">Active Store Categories (Click 🗑️ to Delete):</label>
+        <div id="categoryListContainer" style="max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px;">
+          <!-- Dynamically populated category pills with delete buttons -->
+        </div>
+      </div>
+
+      <div style="padding: 14px 20px; border-top: 1px solid var(--edit-border); text-align: right; background: var(--edit-surface-subtle);">
+        <button type="button" onclick="closeCategoryManagerModal()" class="btn-publish-main" style="padding: 8px 24px; background: #334155; font-size: 0.85rem;">
+          Done
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast-container" id="adminToastContainer"></div>
+
+  <!-- Firebase & Supabase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="auth.js"></script>
+  <script src="admin_add_product.js"></script>
+</body>
+</html>

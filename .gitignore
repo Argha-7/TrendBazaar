@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.env.local
+.env.*.local
+
+# Node / npm (agar future mein use ho)
+node_modules/
+npm-debug.log*
+
+# Vercel
+.vercel/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Sensitive / local only
+server.py
+
+# Logs
+*.log

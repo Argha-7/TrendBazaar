@@ -1,0 +1,19 @@
+# TrendBazaar - India's Favorite Online Shopping Store
+
+[TrendBazaar](http://localhost:8080/index.html)
+[Admin Portal](http://localhost:8080/admin.html)
+
+# Grand Ethnic Wear & Tech Offers
+Up to 80% OFF on Jacquard Silk Sarees, Designer Kurtis, Wireless Earbuds & Lifestyle Essentials. Guaranteed Quality • Cash on Delivery.
+
+## Top Value Deals
+
+## Product Title
+- 10% Instant Discount on HDFC & SBI Credit Cards
+- ₹1,000 Extra discount with Bank offer on order values above ₹500
+- Free Fast Nationwide Express Shipping on COD
+High quality product with white-label delivery.
+
+## Shopping Cart & Checkout
+
+#### Customer Shipping Address
