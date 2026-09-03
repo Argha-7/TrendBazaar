@@ -1784,16 +1784,36 @@ body {
    MOBILE RESPONSIVENESS (STOREFRONT)
    ==================================================== */
 @media (max-width: 768px) {
-  /* Header */
+  /* Header Grid Layout */
   .sk-nav-container {
-    flex-wrap: wrap;
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 
+      "logo actions"
+      "search search";
     gap: 12px;
-    padding: 10px 16px;
+    padding: 12px 16px;
+    align-items: center;
   }
-  .sk-search-box {
-    order: 3;
-    min-width: 100%;
+  .sk-logo { grid-area: logo; }
+  .sk-header-actions { 
+    grid-area: actions; 
+    justify-content: flex-end; 
+    gap: 8px;
   }
+  .sk-search-box { grid-area: search; min-width: 100%; }
+  
+  /* Icon buttons clean up */
+  .sk-icon-btn span { display: none; }
+  .sk-icon-btn { 
+    font-size: 1.4rem; 
+    padding: 4px;
+    background: transparent !important;
+    border: none !important;
+    color: var(--sk-text-dark);
+  }
+  .sk-logo-icon { width: 32px; height: 32px; font-size: 1.1rem; }
+  .sk-logo { font-size: 1.3rem; }
   
   /* Category Strip */
   .sk-category-container {
