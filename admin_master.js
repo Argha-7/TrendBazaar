@@ -498,6 +498,9 @@ async function renderUsers() {
           <button class="adm-btn-primary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="toggleUserRole('${u.firebase_uid || u.id}', '${role}')">
             ${isAdm ? 'Demote to User' : 'Promote to Admin'}
           </button>
+          <button class="adm-btn-secondary" style="padding: 4px 10px; font-size: 0.75rem; margin-left: 6px;" onclick="editUserWallet('${u.firebase_uid || u.id}', '${u.email}')">
+            <i class="ri-wallet-3-line"></i> Wallet
+          </button>
         </td>
       </tr>
     `;
@@ -515,12 +518,43 @@ async function toggleUserRole(uid, currentRole) {
   if (error) {
     showAdminToast('Role update failed: ' + error.message, 'error');
   } else {
-    showAdminToast(`Role changed to ${newRole}`, 'success');
+    showAdminToast(`User role updated to ${newRole.toUpperCase()}`, 'success');
     renderUsers();
   }
 }
+window.toggleUserRole = toggleUserRole;
 
-// ---------- Wishlists Tracker ----------
+async function editUserWallet(uid, email) {
+  const sb = getSupabase();
+  if (!sb) return;
+
+  // First fetch current wallet balance
+  const { data: walletData, error: walletErr } = await sb.from('wallets').select('balance').eq('firebase_uid', uid).single();
+  
+  let currentBalance = 0;
+  if (walletData) {
+    currentBalance = walletData.balance;
+  }
+
+  const newBalance = prompt(`Enter new wallet balance for ${email} (Current: ₹${currentBalance}):`, currentBalance);
+  if (newBalance === null) return; // User cancelled
+  
+  const balance = parseFloat(newBalance);
+  if (isNaN(balance)) {
+    alert("Please enter a valid number");
+    return;
+  }
+
+  const { error } = await sb.from('wallets').upsert({ firebase_uid: uid, balance: balance });
+  if (error) {
+    showAdminToast("Failed to update wallet: " + error.message, "error");
+  } else {
+    showAdminToast(`Wallet balance for ${email} updated to ₹${balance}`, "success");
+  }
+}
+window.editUserWallet = editUserWallet;
+
+// ---------- Dynamic Coupons Manager ----------
 async function renderWishlists() {
   const wrapper = document.getElementById('wishlistTableWrapper');
   if (!wrapper) return;

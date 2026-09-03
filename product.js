@@ -195,6 +195,31 @@ function renderProductDOM(p) {
 
   // Description
   document.getElementById('dynDescription').textContent = p.description;
+
+  // Video
+  const videoContainer = document.getElementById('dynVideoContainer');
+  if (videoContainer) {
+    if (p.video_url && (p.video_url.includes('youtube.com') || p.video_url.includes('youtu.be'))) {
+      let videoId = '';
+      if (p.video_url.includes('v=')) {
+        videoId = p.video_url.split('v=')[1].split('&')[0];
+      } else if (p.video_url.includes('youtu.be/')) {
+        videoId = p.video_url.split('youtu.be/')[1].split('?')[0];
+      }
+      if (videoId) {
+        videoContainer.style.display = 'block';
+        videoContainer.innerHTML = `
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--sk-text-dark); margin-bottom: 10px; border-bottom: 1px solid var(--sk-border); padding-bottom: 8px;">
+            Product Video Review
+          </h3>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 8px;"></iframe>
+        `;
+      }
+    } else {
+      videoContainer.style.display = 'none';
+      videoContainer.innerHTML = '';
+    }
+  }
 }
 
 // ----------------------------------------------------

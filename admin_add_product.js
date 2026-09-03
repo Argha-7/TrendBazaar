@@ -372,10 +372,13 @@ async function checkParamsAndPopulate() {
         const { data: p } = await sb.from('products').select('*').eq('id', editId).single();
         if (p) {
           document.getElementById('pTitle').value = p.title || '';
-          document.getElementById('pCategory').value = p.category || 'General';
-          document.getElementById('pCost').value = p.meesho_price || Math.round((p.price || 0) * 0.55);
+          document.getElementById('pCost').value = p.meesho_price || '';
           document.getElementById('pPrice').value = p.price || '';
-          document.getElementById('pMrp').value = p.original_price || (p.price * 2);
+          document.getElementById('pMrp').value = p.original_price || '';
+          document.getElementById('pDescription').value = p.description || '';
+          if (p.video_url) {
+            document.getElementById('pVideoUrl').value = p.video_url;
+          }
           
           if (Array.isArray(p.images) && p.images.length > 0) {
             productImages = [...p.images];
@@ -383,7 +386,7 @@ async function checkParamsAndPopulate() {
             productImages = [p.image];
           }
 
-          document.getElementById('pDescription').value = p.description || '';
+          document.getElementById('pCategory').value = p.category || 'General';
           if (p.sizes && Array.isArray(p.sizes)) {
             setSelectedSizes(p.sizes);
           }
@@ -477,18 +480,19 @@ async function handlePublishProductForm(e) {
   const mrp = parseFloat(document.getElementById('pMrp').value) || (price * 2);
   const category = document.getElementById('pCategory').value;
   const desc = document.getElementById('pDescription').value.trim();
+  const video_url = document.getElementById('pVideoUrl').value.trim();
   
-  const specs = {};
+  const specsObj = {};
   document.querySelectorAll('#dynamicSpecsContainer > div').forEach(row => {
     const key = row.querySelector('.spec-key').value.trim();
     const val = row.querySelector('.spec-val').value.trim();
-    if (key && val) specs[key] = val;
+    if (key && val) specsObj[key] = val;
   });
   
-  if (Object.keys(specs).length === 0) {
-    specs['White-Label Warranty'] = '7 Days Instant Replacement';
-  } else if (!specs['White-Label Warranty']) {
-    specs['White-Label Warranty'] = '7 Days Instant Replacement';
+  if (Object.keys(specsObj).length === 0) {
+    specsObj['White-Label Warranty'] = '7 Days Instant Replacement';
+  } else if (!specsObj['White-Label Warranty']) {
+    specsObj['White-Label Warranty'] = '7 Days Instant Replacement';
   }
 
   if (!title || isNaN(price)) {
@@ -507,22 +511,21 @@ async function handlePublishProductForm(e) {
     ...productImages.filter((_, idx) => idx !== coverImageIndex)
   ];
 
-  const sizes = getSelectedSizes();
+  const selectedSizes = getSelectedSizes();
   const discount = `${Math.round(((mrp - price) / mrp) * 100)}% off`;
 
   const payload = {
     title,
-    category,
-    meesho_price: cost || Math.round(price * 0.55),
     price,
     original_price: mrp,
     discount,
-    rating: 4.6,
-    reviews: 120,
     images: finalImages,
-    sizes,
+    sizes: selectedSizes,
     description: desc,
-    specs: specs
+    category,
+    meesho_price: cost,
+    specs: specsObj,
+    video_url
   };
 
   const btn = document.getElementById('btnTopPublish');

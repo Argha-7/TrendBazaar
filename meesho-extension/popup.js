@@ -105,10 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const allImgsParam = encodeURIComponent(JSON.stringify(mainPhotos));
       const sizesParam = encodeURIComponent((extractedData.sizes || ['Free Size']).join(','));
       const descParam = encodeURIComponent(extractedData.description || '');
-      const fabricParam = encodeURIComponent(extractedData.specs?.['Fabric / Material'] || extractedData.specs?.['Fabric'] || 'Blended Fabric');
-      const patternParam = encodeURIComponent(extractedData.specs?.['Pattern / Style'] || extractedData.specs?.['Pattern'] || 'Classic Design');
+      const fullSpecsParam = encodeURIComponent(JSON.stringify(extractedData.specs || {}));
 
-      const targetUrl = `https://trend-bazaar-steel.vercel.app/admin_add_product.html?title=${encodeURIComponent(extractedData.title)}&cost=${extractedData.price}&price=${selling}&mrp=${mrp}&imgUrl=${encodeURIComponent(extractedData.primaryImage)}&photos=${allImgsParam}&sizes=${sizesParam}&fabric=${fabricParam}&pattern=${patternParam}&desc=${descParam}&link=${encodeURIComponent(extractedData.url)}`;
+      const targetUrl = `https://trend-bazaar-steel.vercel.app/admin_add_product.html?title=${encodeURIComponent(extractedData.title)}&cost=${extractedData.price}&price=${selling}&mrp=${mrp}&imgUrl=${encodeURIComponent(extractedData.primaryImage)}&photos=${allImgsParam}&sizes=${sizesParam}&fullSpecs=${fullSpecsParam}&desc=${descParam}&link=${encodeURIComponent(extractedData.url)}`;
 
       chrome.tabs.create({ url: targetUrl });
     });
