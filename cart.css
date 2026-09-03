@@ -159,6 +159,14 @@ body {
     margin: 16px auto;
     padding: 0 12px;
   }
+  
+  .meesho-stepper, .sk-safe-badge {
+    display: none !important;
+  }
+  
+  .meesho-header-inner {
+    justify-content: center;
+  }
 }
 
 .meesho-card {
