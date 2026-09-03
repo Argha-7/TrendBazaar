@@ -592,6 +592,55 @@
     </div>
   </div>
 
+  <!-- BUILDER SECTION SELECTION MODAL (Elementor Style) -->
+  <div id="builderSectionModal" class="adm-modal-overlay">
+    <div class="adm-modal-box" style="max-width: 600px;">
+      <div class="adm-modal-header">
+        <h3 style="font-weight: 800; font-size: 1.2rem;">Choose a Section to Add</h3>
+        <button class="adm-modal-close" onclick="closeSectionModal()">&times;</button>
+      </div>
+      <div class="adm-modal-body">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+          <!-- Hero Section -->
+          <div onclick="addSectionOfType('hero')" style="border: 1px solid var(--adm-border); border-radius: 8px; padding: 20px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff;" onmouseover="this.style.borderColor='var(--adm-primary)'; this.style.backgroundColor='#f0f9ff';" onmouseout="this.style.borderColor='var(--adm-border)'; this.style.backgroundColor='#fff';">
+            <i class="ri-slideshow-line" style="font-size: 2rem; color: var(--adm-primary); margin-bottom: 8px; display: block;"></i>
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--adm-text-main);">Hero Banner</span>
+          </div>
+          
+          <!-- Circle Categories -->
+          <div onclick="addSectionOfType('circle_categories')" style="border: 1px solid var(--adm-border); border-radius: 8px; padding: 20px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff;" onmouseover="this.style.borderColor='var(--adm-primary)'; this.style.backgroundColor='#f0f9ff';" onmouseout="this.style.borderColor='var(--adm-border)'; this.style.backgroundColor='#fff';">
+            <i class="ri-checkbox-blank-circle-line" style="font-size: 2rem; color: var(--adm-primary); margin-bottom: 8px; display: block;"></i>
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--adm-text-main);">Circle Categories</span>
+          </div>
+
+          <!-- Brands Marquee -->
+          <div onclick="addSectionOfType('brands_marquee')" style="border: 1px solid var(--adm-border); border-radius: 8px; padding: 20px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff;" onmouseover="this.style.borderColor='var(--adm-primary)'; this.style.backgroundColor='#f0f9ff';" onmouseout="this.style.borderColor='var(--adm-border)'; this.style.backgroundColor='#fff';">
+            <i class="ri-vip-diamond-line" style="font-size: 2rem; color: var(--adm-primary); margin-bottom: 8px; display: block;"></i>
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--adm-text-main);">Brands Marquee</span>
+          </div>
+
+          <!-- Product Grid -->
+          <div onclick="addSectionOfType('grid')" style="border: 1px solid var(--adm-border); border-radius: 8px; padding: 20px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff;" onmouseover="this.style.borderColor='var(--adm-primary)'; this.style.backgroundColor='#f0f9ff';" onmouseout="this.style.borderColor='var(--adm-border)'; this.style.backgroundColor='#fff';">
+            <i class="ri-grid-fill" style="font-size: 2rem; color: var(--adm-primary); margin-bottom: 8px; display: block;"></i>
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--adm-text-main);">Product Grid</span>
+          </div>
+
+          <!-- Square Categories -->
+          <div onclick="addSectionOfType('square_categories')" style="border: 1px solid var(--adm-border); border-radius: 8px; padding: 20px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff;" onmouseover="this.style.borderColor='var(--adm-primary)'; this.style.backgroundColor='#f0f9ff';" onmouseout="this.style.borderColor='var(--adm-border)'; this.style.backgroundColor='#fff';">
+            <i class="ri-layout-grid-fill" style="font-size: 2rem; color: var(--adm-primary); margin-bottom: 8px; display: block;"></i>
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--adm-text-main);">Square Categories</span>
+          </div>
+
+          <!-- Deals Flash -->
+          <div onclick="addSectionOfType('deals')" style="border: 1px solid var(--adm-border); border-radius: 8px; padding: 20px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff;" onmouseover="this.style.borderColor='var(--adm-primary)'; this.style.backgroundColor='#f0f9ff';" onmouseout="this.style.borderColor='var(--adm-border)'; this.style.backgroundColor='#fff';">
+            <i class="ri-timer-flash-line" style="font-size: 2rem; color: var(--adm-primary); margin-bottom: 8px; display: block;"></i>
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--adm-text-main);">Deals (Timer)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Container -->
   <div id="adminToastContainer" class="toast-container"></div>
 

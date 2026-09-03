@@ -29,6 +29,8 @@ function renderBuilderUI() {
     return;
   }
 
+  let draggedIndex = null;
+
   homepageLayout.forEach((section, index) => {
     const el = document.createElement('div');
     el.className = 'adm-builder-section';
@@ -37,6 +39,41 @@ function renderBuilderUI() {
     el.style.padding = '16px';
     el.style.background = '#f8fafc';
     el.style.marginBottom = '12px';
+    el.style.cursor = 'grab';
+    el.draggable = true;
+
+    // Drag events
+    el.addEventListener('dragstart', (e) => {
+      draggedIndex = index;
+      e.dataTransfer.effectAllowed = 'move';
+      el.style.opacity = '0.5';
+    });
+    
+    el.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      el.style.border = '2px dashed var(--adm-primary)';
+    });
+    
+    el.addEventListener('dragleave', () => {
+      el.style.border = '1px solid var(--adm-border)';
+    });
+    
+    el.addEventListener('drop', (e) => {
+      e.preventDefault();
+      el.style.border = '1px solid var(--adm-border)';
+      if (draggedIndex !== null && draggedIndex !== index) {
+        // Move array item
+        const movedItem = homepageLayout.splice(draggedIndex, 1)[0];
+        homepageLayout.splice(index, 0, movedItem);
+        renderBuilderUI();
+      }
+    });
+
+    el.addEventListener('dragend', () => {
+      el.style.opacity = '1';
+      draggedIndex = null;
+    });
 
     const header = document.createElement('div');
     header.style.display = 'flex';
@@ -44,13 +81,12 @@ function renderBuilderUI() {
     header.style.alignItems = 'center';
     header.style.marginBottom = '12px';
     header.innerHTML = `
-      <div style="font-weight: 800; color: var(--adm-text-main); font-size: 1.05rem;">
-        <i class="${getIconForType(section.type)}" style="color: var(--adm-primary); margin-right: 6px;"></i>
+      <div style="font-weight: 800; color: var(--adm-text-main); font-size: 1.05rem; display: flex; align-items: center; gap: 8px;">
+        <i class="ri-draggable" style="color: #94a3b8; cursor: grab; font-size: 1.2rem;"></i>
+        <i class="${getIconForType(section.type)}" style="color: var(--adm-primary);"></i>
         ${formatType(section.type)} Section
       </div>
       <div style="display: flex; gap: 6px;">
-        <button class="adm-btn-secondary" onclick="moveSectionUp(${index})" ${index === 0 ? 'disabled' : ''} style="padding: 6px;"><i class="ri-arrow-up-line"></i></button>
-        <button class="adm-btn-secondary" onclick="moveSectionDown(${index})" ${index === homepageLayout.length - 1 ? 'disabled' : ''} style="padding: 6px;"><i class="ri-arrow-down-line"></i></button>
         <button class="adm-action-btn delete" onclick="deleteSection(${index})" style="padding: 6px;"><i class="ri-delete-bin-line"></i></button>
       </div>
     `;
@@ -119,21 +155,26 @@ function formatType(type) {
   return type.charAt(0).toUpperCase() + type.slice(1);
 }
 
-window.addNewBuilderSection = function() {
-  const type = prompt("Enter section type (hero / grid / deals / circle_categories / brands_marquee / square_categories):", "circle_categories");
-  if (!type) return;
+window.openSectionModal = function() {
+  const modal = document.getElementById('builderSectionModal');
+  if(modal) modal.style.display = 'flex';
+}
+
+window.closeSectionModal = function() {
+  const modal = document.getElementById('builderSectionModal');
+  if(modal) modal.style.display = 'none';
+}
+
+window.addSectionOfType = function(type) {
   const t = type.toLowerCase().trim();
-  if (['hero', 'grid', 'deals', 'circle_categories', 'brands_marquee', 'square_categories'].includes(t)) {
-    homepageLayout.push({
-      type: t,
-      title: t === 'hero' ? '' : (t === 'deals' ? 'Deals of the Day' : 'New Collection'),
-      items: [],
-      id: 'sec_' + Date.now()
-    });
-    renderBuilderUI();
-  } else {
-    alert("Invalid type. Choose from the available options.");
-  }
+  homepageLayout.push({
+    type: t,
+    title: t === 'hero' ? '' : (t === 'deals' ? 'Deals of the Day' : 'New Collection'),
+    items: [],
+    id: 'sec_' + Date.now()
+  });
+  renderBuilderUI();
+  closeSectionModal();
 }
 
 window.updateSectionField = function(index, field, value) {
