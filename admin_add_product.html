@@ -119,8 +119,11 @@
           <div class="editor-card-header">
             <div class="editor-card-header-left">
               <i class="ri-list-settings-line"></i>
-              <span>Variants & Fabric Specifications</span>
+              <span>Variants & Specifications</span>
             </div>
+            <button type="button" class="adm-btn adm-btn-secondary" onclick="addSpecRow()" style="padding: 6px 12px; font-size: 0.8rem;">
+              <i class="ri-add-line"></i> Add Spec
+            </button>
           </div>
 
           <div style="margin-bottom: 20px;">
@@ -136,15 +139,10 @@
             </div>
           </div>
 
-          <div class="editor-grid-2">
-            <div>
-              <label class="editor-label">Fabric / Material</label>
-              <input type="text" id="pFabric" class="editor-input" placeholder="e.g. Jacquard Silk Blend / Pure Cotton">
-            </div>
-
-            <div>
-              <label class="editor-label">Pattern / Work Style</label>
-              <input type="text" id="pPattern" class="editor-input" placeholder="e.g. Heavy Zari Embroidery Lace">
+          <div>
+            <label class="editor-label">Dynamic Specifications (Key & Value)</label>
+            <div id="dynamicSpecsContainer" style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px;">
+              <!-- Dynamic rows go here -->
             </div>
           </div>
         </div>

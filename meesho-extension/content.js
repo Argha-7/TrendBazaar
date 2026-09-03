@@ -41,10 +41,10 @@ function extractUniversalMeeshoData() {
       const ndData = JSON.parse(nextDataScript.textContent);
 
       // Direct Next.js Product Path check
-      const directProd = ndData.props?.pageProps?.initialData?.product || 
-                         ndData.props?.pageProps?.product || 
-                         ndData.props?.pageProps?.data?.product || 
-                         ndData.props?.pageProps?.data;
+      const directProd = ndData.props?.pageProps?.initialData?.product ||
+        ndData.props?.pageProps?.product ||
+        ndData.props?.pageProps?.data?.product ||
+        ndData.props?.pageProps?.data;
 
       if (directProd) {
         if (directProd.name && typeof directProd.name === 'string' && directProd.name.toLowerCase() !== 'meesho') {
@@ -116,7 +116,7 @@ function extractUniversalMeeshoData() {
       }
 
       deepScan(ndData);
-    } catch (_) {}
+    } catch (_) { }
   }
 
   // ENGINE 2: SCHEMA JSON-LD (Filter out Organization & Breadcrumbs)
@@ -147,7 +147,7 @@ function extractUniversalMeeshoData() {
             }
           }
         }
-      } catch (_) {}
+      } catch (_) { }
     });
   }
 
@@ -179,7 +179,7 @@ function extractUniversalMeeshoData() {
 
   // DOM Price Extractor
   if (!price || price < 20) {
-    const priceCandidates = Array.from(document.querySelectorAll('h4, h3, h2, span, p, div')).filter(el => 
+    const priceCandidates = Array.from(document.querySelectorAll('h4, h3, h2, span, p, div')).filter(el =>
       el.children.length === 0 && el.textContent.includes('₹')
     );
     for (const el of priceCandidates) {
@@ -252,7 +252,7 @@ function injectFloatingExportButton() {
   btn.className = 'tb-extension-btn';
   btn.innerHTML = `🚀 Export to TrendBazaar`;
   btn.title = "1-Click Export Title, HD Photos, Price & Specs to Admin";
-  
+
   btn.addEventListener('click', () => {
     const details = extractUniversalMeeshoData();
     showToast(`⚡ Exporting "${details.title.slice(0, 24)}..." with ${details.images.length} Photos to Admin!`);
@@ -260,10 +260,9 @@ function injectFloatingExportButton() {
     const allImgsParam = encodeURIComponent(JSON.stringify(details.images));
     const sizesParam = encodeURIComponent(details.sizes.join(','));
     const descParam = encodeURIComponent(details.description);
-    const fabricParam = encodeURIComponent(details.specs['Fabric / Material'] || details.specs['Fabric'] || 'Blended Fabric');
-    const patternParam = encodeURIComponent(details.specs['Pattern / Style'] || details.specs['Pattern'] || 'Classic Design');
+    const fullSpecsParam = encodeURIComponent(JSON.stringify(details.specs || {}));
 
-    const targetUrl = `http://localhost:8080/admin_add_product.html?title=${encodeURIComponent(details.title)}&cost=${details.price}&price=${Math.round(details.price * 1.6)}&mrp=${details.price * 3}&imgUrl=${encodeURIComponent(details.primaryImage)}&photos=${allImgsParam}&sizes=${sizesParam}&fabric=${fabricParam}&pattern=${patternParam}&desc=${descParam}&link=${encodeURIComponent(details.url)}`;
+    const targetUrl = `https://trend-bazaar-steel.vercel.app/admin_add_product.html?title=${encodeURIComponent(details.title)}&cost=${details.price}&price=${Math.round(details.price * 1.6)}&mrp=${details.price * 3}&imgUrl=${encodeURIComponent(details.primaryImage)}&photos=${allImgsParam}&sizes=${sizesParam}&fullSpecs=${fullSpecsParam}&desc=${descParam}&link=${encodeURIComponent(details.url)}`;
 
     window.open(targetUrl, '_blank');
   });

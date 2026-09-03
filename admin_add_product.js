@@ -388,8 +388,10 @@ async function checkParamsAndPopulate() {
             setSelectedSizes(p.sizes);
           }
           if (p.specs) {
-            if (p.specs['Fabric / Material']) document.getElementById('pFabric').value = p.specs['Fabric / Material'];
-            if (p.specs['Pattern / Style']) document.getElementById('pPattern').value = p.specs['Pattern / Style'];
+            Object.entries(p.specs).forEach(([k, v]) => addSpecRow(k, v));
+          } else {
+            addSpecRow('Fabric / Material', 'Premium Blended Fabric');
+            addSpecRow('Pattern / Style', 'Classic Design');
           }
 
           renderGalleryCards();
@@ -425,14 +427,40 @@ async function checkParamsAndPopulate() {
       productImages = [decodeURIComponent(primaryImg)];
     }
 
-    if (params.get('fabric')) document.getElementById('pFabric').value = decodeURIComponent(params.get('fabric'));
-    if (params.get('pattern')) document.getElementById('pPattern').value = decodeURIComponent(params.get('pattern'));
+    const fullSpecsParam = params.get('fullSpecs');
+    if (fullSpecsParam) {
+      try {
+        const specsObj = JSON.parse(decodeURIComponent(fullSpecsParam));
+        Object.entries(specsObj).forEach(([k, v]) => addSpecRow(k, v));
+      } catch (_) {
+        addSpecRow('Fabric / Material', decodeURIComponent(params.get('fabric') || 'Blended Fabric'));
+        addSpecRow('Pattern / Style', decodeURIComponent(params.get('pattern') || 'Classic Design'));
+      }
+    } else {
+      addSpecRow('Fabric / Material', decodeURIComponent(params.get('fabric') || 'Blended Fabric'));
+      addSpecRow('Pattern / Style', decodeURIComponent(params.get('pattern') || 'Classic Design'));
+    }
 
     renderGalleryCards();
     recalculateProfitEngine();
     showAdminToast('🎉 Product data & photos imported from Meesho!', 'success');
   }
 }
+
+// ---------- Dynamic Specs Logic ----------
+function addSpecRow(key = '', value = '') {
+  const container = document.getElementById('dynamicSpecsContainer');
+  const row = document.createElement('div');
+  row.style.display = 'flex';
+  row.style.gap = '10px';
+  row.innerHTML = `
+    <input type="text" class="editor-input spec-key" placeholder="Spec Name (e.g. Fabric)" value="${key}" style="flex: 1;">
+    <input type="text" class="editor-input spec-val" placeholder="Value (e.g. Cotton)" value="${value}" style="flex: 2;">
+    <button type="button" class="adm-btn adm-btn-danger" onclick="this.parentElement.remove()" style="padding: 0 12px; font-size: 1.1rem;" title="Remove Spec"><i class="ri-delete-bin-line"></i></button>
+  `;
+  container.appendChild(row);
+}
+window.addSpecRow = addSpecRow;
 
 // ---------- Publish / Save Product to Database ----------
 async function handlePublishProductForm(e) {
@@ -449,8 +477,19 @@ async function handlePublishProductForm(e) {
   const mrp = parseFloat(document.getElementById('pMrp').value) || (price * 2);
   const category = document.getElementById('pCategory').value;
   const desc = document.getElementById('pDescription').value.trim();
-  const fabric = document.getElementById('pFabric').value.trim() || 'Blended Fabric';
-  const pattern = document.getElementById('pPattern').value.trim() || 'Classic Design';
+  
+  const specs = {};
+  document.querySelectorAll('#dynamicSpecsContainer > div').forEach(row => {
+    const key = row.querySelector('.spec-key').value.trim();
+    const val = row.querySelector('.spec-val').value.trim();
+    if (key && val) specs[key] = val;
+  });
+  
+  if (Object.keys(specs).length === 0) {
+    specs['White-Label Warranty'] = '7 Days Instant Replacement';
+  } else if (!specs['White-Label Warranty']) {
+    specs['White-Label Warranty'] = '7 Days Instant Replacement';
+  }
 
   if (!title || isNaN(price)) {
     alert('Please enter Product Title and Selling Price!');
@@ -483,11 +522,7 @@ async function handlePublishProductForm(e) {
     images: finalImages,
     sizes,
     description: desc,
-    specs: {
-      'Fabric / Material': fabric,
-      'Pattern / Style': pattern,
-      'White-Label Warranty': '7 Days Instant Replacement'
-    }
+    specs: specs
   };
 
   const btn = document.getElementById('btnTopPublish');
