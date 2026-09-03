@@ -88,6 +88,16 @@ function renderBuilderUI() {
           <input type="text" class="adm-form-input" value="${section.timer || ''}" placeholder="e.g. 2026-10-01T00:00:00Z" onchange="updateSectionField(${index}, 'timer', this.value)">
         </div>
       `;
+    } else if (section.type === 'circle_categories' || section.type === 'brands_marquee' || section.type === 'square_categories') {
+      body.innerHTML = `
+        <div class="adm-form-group">
+          <label class="adm-form-label">${formatType(section.type)} Items (JSON Array):</label>
+          <div style="font-size: 0.75rem; color: #64748b; margin-bottom: 8px;">
+            ${section.type === 'brands_marquee' ? 'Example: [{"image":"logo.png","link":"#"}]' : 'Example: [{"image":"cat.jpg","label":"Category Name","link":"#", "bgColor": "#6366f1"}]'}
+          </div>
+          <textarea class="adm-form-input" rows="4" placeholder="Enter JSON array..." onchange="try{ updateSectionField(${index}, 'items', JSON.parse(this.value)) }catch(e){ alert('Invalid JSON format!') }">${JSON.stringify(section.items || [])}</textarea>
+        </div>
+      `;
     }
 
     el.appendChild(body);
@@ -99,6 +109,9 @@ function getIconForType(type) {
   if (type === 'hero') return 'ri-slideshow-line';
   if (type === 'grid') return 'ri-grid-fill';
   if (type === 'deals') return 'ri-timer-flash-line';
+  if (type === 'circle_categories') return 'ri-checkbox-blank-circle-line';
+  if (type === 'brands_marquee') return 'ri-vip-diamond-line';
+  if (type === 'square_categories') return 'ri-layout-grid-fill';
   return 'ri-layout-line';
 }
 
@@ -107,18 +120,19 @@ function formatType(type) {
 }
 
 window.addNewBuilderSection = function() {
-  const type = prompt("Enter section type (hero / grid / deals):", "grid");
+  const type = prompt("Enter section type (hero / grid / deals / circle_categories / brands_marquee / square_categories):", "circle_categories");
   if (!type) return;
   const t = type.toLowerCase().trim();
-  if (['hero', 'grid', 'deals'].includes(t)) {
+  if (['hero', 'grid', 'deals', 'circle_categories', 'brands_marquee', 'square_categories'].includes(t)) {
     homepageLayout.push({
       type: t,
       title: t === 'hero' ? '' : (t === 'deals' ? 'Deals of the Day' : 'New Collection'),
+      items: [],
       id: 'sec_' + Date.now()
     });
     renderBuilderUI();
   } else {
-    alert("Invalid type. Choose hero, grid, or deals.");
+    alert("Invalid type. Choose from the available options.");
   }
 }
 
