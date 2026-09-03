@@ -215,6 +215,22 @@ function extractUniversalMeeshoData() {
     });
   }
 
+  // DOM Specs Aggressive Fallback for "Product Highlights"
+  const allSpans = document.querySelectorAll('span');
+  for (let i = 0; i < allSpans.length - 1; i++) {
+    const keySpan = allSpans[i];
+    const valSpan = allSpans[i+1];
+    if (keySpan.parentElement === valSpan.parentElement && keySpan.parentElement.children.length === 2) {
+      const key = keySpan.textContent.trim();
+      const val = valSpan.textContent.trim();
+      if (key.length >= 3 && key.length < 40 && val.length > 0 && val.length < 100) {
+        if (!key.includes('₹') && !val.includes('₹') && !key.includes('Meesho') && !key.toLowerCase().includes('review') && !key.toLowerCase().includes('rating')) {
+          specs[key] = val;
+        }
+      }
+    }
+  }
+
   // Fallbacks
   if (!title || title.toLowerCase() === 'meesho') title = 'Trendy Floral Designer Kurti Set';
   if (!price || price < 30) price = 499;
