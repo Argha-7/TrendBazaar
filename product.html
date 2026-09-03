@@ -211,6 +211,33 @@
       0% { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .pdp-grid-container {
+        grid-template-columns: 1fr !important;
+        padding: 12px !important;
+        gap: 16px !important;
+      }
+      .pdp-main-img-box {
+        height: 350px !important;
+      }
+      .btn-pdp-cart, .btn-pdp-buy {
+        padding: 12px !important;
+        font-size: 0.95rem !important;
+      }
+      .pdp-spec-table td {
+        padding: 8px !important;
+      }
+      header > div {
+        flex-wrap: wrap;
+      }
+      header > div > div:nth-child(2) {
+        order: 3;
+        min-width: 100%;
+        margin-top: 8px;
+      }
+    }
   </style>
 </head>
 <body>

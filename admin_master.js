@@ -1105,7 +1105,17 @@ document.getElementById('logoutBtn')?.addEventListener('click', () => {
 });
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', bootstrapAdmin);
+  document.addEventListener('DOMContentLoaded', () => {
+    bootstrapAdmin();
+    // Mobile sidebar toggle
+    const sidebarBtn = document.getElementById('admSidebarToggle');
+    const sidebar = document.getElementById('admSidebar');
+    if (sidebarBtn && sidebar) {
+      sidebarBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+    }
+  });
 } else {
   bootstrapAdmin();
 }

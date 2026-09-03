@@ -887,15 +887,57 @@ body {
 /* ========================================================
    RESPONSIVE ADAPTATIONS
    ======================================================== */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .adm-sidebar {
     transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 2000;
   }
+  
   .adm-sidebar.open {
     transform: translateX(0);
   }
+  
   .adm-app-container {
     margin-left: 0;
     width: 100%;
+  }
+  
+  #admSidebarToggle {
+    display: flex !important;
+  }
+
+  .adm-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .adm-settings-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Make sure the live preview on builder is hidden or stacked */
+  .adm-preview-pane {
+    display: none; /* Hide preview on mobile to save space */
+  }
+}
+
+@media (max-width: 576px) {
+  .adm-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+  .adm-hero-title {
+    font-size: 1.4rem;
+  }
+  .adm-topbar {
+    padding: 0 12px;
+  }
+  .adm-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .adm-card-header-actions {
+    width: 100%;
+    flex-wrap: wrap;
   }
 }

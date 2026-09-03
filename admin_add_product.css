@@ -537,3 +537,43 @@ body {
   align-items: center;
   gap: 8px;
 }
+
+/* ========================================================
+   MOBILE RESPONSIVENESS (ADMIN PRODUCT EDITOR)
+   ======================================================== */
+@media (max-width: 992px) {
+  .editor-main-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .editor-topbar-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .editor-topbar-right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btn-view-store, .btn-publish-main {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .editor-grid-2, .editor-grid-3, .editor-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .editor-main-container {
+    padding: 16px;
+  }
+  
+  .editor-card {
+    padding: 16px;
+  }
+}

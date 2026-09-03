@@ -1776,3 +1776,79 @@ body {
   font-size: 1.4rem;
 }
 
+/* ====================================================
+   MOBILE RESPONSIVENESS (STOREFRONT)
+   ==================================================== */
+@media (max-width: 768px) {
+  /* Header */
+  .sk-nav-container {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 16px;
+  }
+  .sk-search-box {
+    order: 3;
+    min-width: 100%;
+  }
+  
+  /* Category Strip */
+  .sk-category-container {
+    padding: 8px 16px;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-start;
+  }
+  
+  /* Trust Strip */
+  .sk-trust-container {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 8px;
+  }
+  
+  /* Product Grids */
+  .sk-product-grid,
+  #dynSuggestedGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+  
+  /* Adjust image size for 2-column mobile grid */
+  .sk-product-img-wrapper {
+    height: 150px;
+  }
+  
+  /* Modals */
+  .sk-modal-box {
+    width: 95%;
+    max-height: 90vh;
+    padding: 16px;
+  }
+  
+  /* Hero Carousel */
+  .sk-hero-title {
+    font-size: 1.4rem !important;
+  }
+  .sk-hero-content {
+    padding: 16px !important;
+    width: 90% !important;
+  }
+  .sk-hero-card {
+    height: 350px !important;
+  }
+  
+  /* Typography adjust */
+  h1 { font-size: 1.6rem !important; }
+  h2 { font-size: 1.3rem !important; }
+}
+
+@media (max-width: 480px) {
+  /* Go to 1 column on very small phones if preferred, but 2 is standard for Meesho */
+  .sk-hero-title {
+    font-size: 1.2rem !important;
+  }
+  .sk-hero-card {
+    height: 280px !important;
+  }
+}
