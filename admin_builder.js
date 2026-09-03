@@ -8,7 +8,11 @@ async function loadHomepageBuilder() {
   try {
     const { data } = await sb.from('site_settings').select('homepage_layout').eq('id', 1).single();
     if (data && data.homepage_layout) {
-      homepageLayout = Array.isArray(data.homepage_layout) ? data.homepage_layout : [];
+      if (typeof data.homepage_layout === 'string') {
+        try { homepageLayout = JSON.parse(data.homepage_layout); } catch(e){}
+      } else if (Array.isArray(data.homepage_layout)) {
+        homepageLayout = data.homepage_layout;
+      }
     }
   } catch (e) {
     console.error("Failed to load layout", e);

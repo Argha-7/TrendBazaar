@@ -646,7 +646,7 @@ async function applyDynamicSettings() {
     if (data) {
       if (data.homepage_layout) {
         try {
-          const layoutArray = JSON.parse(data.homepage_layout);
+          const layoutArray = typeof data.homepage_layout === 'string' ? JSON.parse(data.homepage_layout) : data.homepage_layout;
           renderDynamicHomepage(layoutArray);
         } catch (e) {
           console.error("Error parsing homepage_layout", e);
