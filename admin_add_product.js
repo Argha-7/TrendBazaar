@@ -38,18 +38,26 @@ const DEFAULT_CATEGORIES = [
   'Beauty & Health',
   'Footwear & Bags',
   'Jewellery & Accessories',
+  'Software & SaaS',
+  'Grocery & Essentials',
   'General'
 ];
 
 function getStoreCategories() {
+  let cats = [...DEFAULT_CATEGORIES];
   try {
     const saved = localStorage.getItem('tb_store_categories');
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        DEFAULT_CATEGORIES.forEach(dc => {
+          if (!parsed.includes(dc)) parsed.push(dc);
+        });
+        cats = parsed;
+      }
     }
   } catch (_) {}
-  return [...DEFAULT_CATEGORIES];
+  return cats;
 }
 
 function saveStoreCategories(cats) {

@@ -141,9 +141,10 @@ function renderSkProducts(filteredItems = null) {
           <i class="${isWishlisted ? 'ri-heart-3-fill' : 'ri-heart-3-line'}"></i>
         </button>
         <span class="sk-badge-discount">${discountPct}% OFF</span>
-        <span style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: #34d399; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 4px;">
-          📸 ${photoCount} Photos
-        </span>
+        ${p.category === 'Software & SaaS' 
+          ? `<span style="position: absolute; bottom: 8px; left: 8px; background: rgba(59,130,246,0.9); color: #fff; font-size: 0.65rem; font-weight: 800; padding: 3px 6px; border-radius: 4px; display: flex; align-items: center; gap: 4px;"><i class="ri-flashlight-fill" style="color: #fbbf24;"></i> Digital</span>` 
+          : `<span style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: #34d399; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 4px;">📸 ${photoCount} Photos</span>`
+        }
       </div>
 
       <div class="sk-product-content">
@@ -789,6 +790,32 @@ function renderDynamicHomepage(layoutArray) {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- TRUST & SERVICE BENEFITS STRIP (Moved here below carousel) -->
+        <section class="sk-trust-strip">
+          <div class="sk-trust-container">
+            <div class="sk-trust-item">
+              <div class="sk-trust-icon"><i class="ri-shield-check-fill"></i></div>
+              <span>100% Genuine Products</span>
+            </div>
+            <div class="sk-trust-item">
+              <div class="sk-trust-icon"><i class="ri-arrow-go-back-fill"></i></div>
+              <span>7 Days Easy Returns</span>
+            </div>
+            <div class="sk-trust-item">
+              <div class="sk-trust-icon"><i class="ri-truck-fill"></i></div>
+              <span>Free Delivery Available</span>
+            </div>
+            <div class="sk-trust-item">
+              <div class="sk-trust-icon"><i class="ri-lock-2-fill"></i></div>
+              <span>100% Secure Payment</span>
+            </div>
+            <div class="sk-trust-item">
+              <div class="sk-trust-icon"><i class="ri-customer-service-2-fill"></i></div>
+              <span>24/7 Support</span>
             </div>
           </div>
         </section>
