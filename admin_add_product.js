@@ -39,7 +39,7 @@ const DEFAULT_CATEGORIES = [
   'Footwear & Bags',
   'Jewellery & Accessories',
   'Software & SaaS',
-  'Grocery & Essentials',
+  'Food Delivery',
   'General'
 ];
 
