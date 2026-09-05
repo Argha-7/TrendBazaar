@@ -65,31 +65,7 @@
     </div>
   </nav>
 
-  <!-- TRUST & SERVICE BENEFITS STRIP -->
-  <section class="sk-trust-strip">
-    <div class="sk-trust-container">
-      <div class="sk-trust-item">
-        <div class="sk-trust-icon"><i class="ri-shield-check-fill"></i></div>
-        <span>100% Genuine Products</span>
-      </div>
-      <div class="sk-trust-item">
-        <div class="sk-trust-icon"><i class="ri-arrow-go-back-fill"></i></div>
-        <span>7 Days Easy Returns</span>
-      </div>
-      <div class="sk-trust-item">
-        <div class="sk-trust-icon"><i class="ri-truck-fill"></i></div>
-        <span>Free Delivery Available</span>
-      </div>
-      <div class="sk-trust-item">
-        <div class="sk-trust-icon"><i class="ri-lock-2-fill"></i></div>
-        <span>100% Secure Payment</span>
-      </div>
-      <div class="sk-trust-item">
-        <div class="sk-trust-icon"><i class="ri-customer-service-2-fill"></i></div>
-        <span>24/7 Support</span>
-      </div>
-    </div>
-  </section>
+  <!-- TRUST STRIP MOVED TO APP.JS (Below Carousel) -->
 
   <!-- DYNAMIC STOREFRONT CONTAINER -->
   <div id="dynamicStorefrontContainer">
@@ -428,6 +404,28 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <script src="auth.js"></script>
+  
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <div class="sk-mobile-bottom-nav">
+    <a href="index.html" class="active">
+      <i class="ri-home-5-fill"></i>
+      <span>Home</span>
+    </a>
+    <a href="index.html" onclick="document.querySelector('.sk-category-strip').scrollIntoView({behavior: 'smooth'})">
+      <i class="ri-apps-2-line"></i>
+      <span>Categories</span>
+    </a>
+    <a href="#" onclick="openCartModal(); return false;">
+      <i class="ri-shopping-cart-2-line"></i>
+      <span style="position: relative;">Cart <span id="mobileCartCount" style="position:absolute; top:-18px; right:-10px; background:var(--sk-danger); color:#fff; border-radius:50%; font-size:0.6rem; padding:2px 5px;">0</span></span>
+    </a>
+    <a href="profile.html">
+      <i class="ri-user-3-line"></i>
+      <span>Profile</span>
+    </a>
+  </div>
+
+  <script src="script.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

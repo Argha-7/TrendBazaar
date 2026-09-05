@@ -333,6 +333,27 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <script src="auth.js"></script>
+  
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <div class="sk-mobile-bottom-nav">
+    <a href="index.html">
+      <i class="ri-home-5-line"></i>
+      <span>Home</span>
+    </a>
+    <a href="index.html" onclick="document.querySelector('.sk-category-strip').scrollIntoView({behavior: 'smooth'})">
+      <i class="ri-apps-2-line"></i>
+      <span>Categories</span>
+    </a>
+    <a href="#" onclick="openCartModal(); return false;">
+      <i class="ri-shopping-cart-2-line"></i>
+      <span style="position: relative;">Cart <span id="mobileCartCount" style="position:absolute; top:-18px; right:-10px; background:var(--sk-danger); color:#fff; border-radius:50%; font-size:0.6rem; padding:2px 5px;">0</span></span>
+    </a>
+    <a href="profile.html" class="active">
+      <i class="ri-user-3-fill"></i>
+      <span>Profile</span>
+    </a>
+  </div>
+
   <script src="profile.js"></script>
 </body>
 </html>

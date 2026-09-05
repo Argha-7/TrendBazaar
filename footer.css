@@ -195,9 +195,22 @@
 }
 
 @media (max-width: 768px) {
+  .sk-trust-features-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .sk-trust-feature-item {
+    background: rgba(255,255,255,0.05);
+    padding: 12px;
+    border-radius: 8px;
+  }
   .sk-footer-main {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 24px;
+  }
+  /* Hide the large links on mobile to save space */
+  .sk-footer-col:not(:last-child) {
+    display: none;
   }
   .sk-footer-bottom-inner {
     flex-direction: column;

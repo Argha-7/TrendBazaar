@@ -1786,22 +1786,25 @@ body {
 @media (max-width: 768px) {
   /* Header Grid Layout */
   .sk-nav-container {
-    display: grid !important;
-    grid-template-columns: auto 1fr;
-    grid-template-areas: 
-      "logo actions"
-      "search search";
+    display: flex !important;
+    flex-direction: column;
     gap: 12px;
     padding: 12px 16px;
-    align-items: center;
+    align-items: stretch;
   }
-  .sk-logo { grid-area: logo; }
+  .sk-logo { align-self: flex-start; }
   .sk-header-actions { 
-    grid-area: actions; 
-    justify-content: flex-end; 
-    gap: 8px;
+    display: none !important;
   }
-  .sk-search-box { grid-area: search; min-width: 100%; }
+  .sk-search-box { 
+    min-width: 100%; 
+  }
+  .sk-search-box input {
+    border-radius: 8px !important;
+    padding: 12px 16px 12px 40px !important;
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+  }
   
   /* Icon buttons clean up */
   .sk-icon-btn span { display: none; }
